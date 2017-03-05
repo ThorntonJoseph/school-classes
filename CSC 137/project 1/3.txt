@@ -1,0 +1,41 @@
+Script started on Sat 04 Mar 2017 04:20:11 PM PST
+[thorntjl@athena:21]> cat proj1c.v
+module proj1c
+(
+input x,y,z,
+output f1,f2,r
+);
+assign f1 = x|y; 
+assign f2 = ~y|z;
+assign r = f1&f2;
+endmodule
+[thorntjl@athena:22]> simv
+Chronologic VCS simulator copyright 1991-2014
+Contains Synopsys proprietary information.
+Compiler version I-2014.03-2; Runtime version I-2014.03-2;  Mar  4 16:20 2017
+
+
+Joseph Thornton Section 3
+X Y Z F
+0 0 0
+      0
+0 0 1
+0 1 0
+0 1 1
+      1
+1 0 0
+1 0 1
+1 1 0
+      0
+1 1 1
+      1
+$finish called from file "proj1atest.v", line 34.
+$finish at simulation time                    8
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 8
+CPU Time:      0.230 seconds;       Data structure size:   0.0Mb
+Sat Mar  4 16:20:24 2017
+[thorntjl@athena:23]> exit
+exit
+
+Script done on Sat 04 Mar 2017 04:20:35 PM PST

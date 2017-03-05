@@ -1,0 +1,52 @@
+Script started on Sat 04 Mar 2017 04:21:23 PM PST
+[thorntjl@athena:21]> cat proj1d.v
+module proj1d
+(
+input x,y,z,
+output reg f
+);
+always@(*)
+begin
+	case({x,y,z})
+	3'b000: begin f=0; end
+	3'b001: begin f=0; end
+	3'b010: begin f=0; end
+	3'b011: begin f=1; end
+	3'b100: begin f=1; end
+	3'b101: begin f=1; end
+	3'b110: begin f=0; end
+	3'b111: begin f=1; end
+	default: begin f=0; end
+	endcase
+end
+endmodule
+[thorntjl@athena:22]> simv
+Chronologic VCS simulator copyright 1991-2014
+Contains Synopsys proprietary information.
+Compiler version I-2014.03-2; Runtime version I-2014.03-2;  Mar  4 16:21 2017
+
+
+Joseph Thornton Section 3
+X Y Z F
+0 0 0
+      0
+0 0 1
+0 1 0
+0 1 1
+      1
+1 0 0
+1 0 1
+1 1 0
+      0
+1 1 1
+      1
+$finish called from file "proj1atest.v", line 34.
+$finish at simulation time                    8
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 8
+CPU Time:      0.230 seconds;       Data structure size:   0.0Mb
+Sat Mar  4 16:21:37 2017
+[thorntjl@athena:23]> exit
+exit
+
+Script done on Sat 04 Mar 2017 04:21:41 PM PST

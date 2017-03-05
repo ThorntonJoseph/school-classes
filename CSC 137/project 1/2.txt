@@ -1,0 +1,44 @@
+Script started on Sat 04 Mar 2017 04:18:09 PM PST
+[thorntjl@athena:21]> cat projh[K1b
+cat: proj1b: No such file or directory
+[thorntjl@athena:22]> cat proj1b.v
+module proj1b(
+input x,y,z,
+output f
+);
+wire out1, out2, out3;
+nor o1(out1,x,y);
+not n1(out2,y);
+nor o2(out3,out2,z);
+nor a1(f,out1,out3);
+endmodule
+[thorntjl@athena:23]> cat proj1b.v[K[23Gexit[Ksimvcat proj1a.v[23Gvi ptoj1.v[K[K[K[K[K[K[K[K[K[Ksimv
+Chronologic VCS simulator copyright 1991-2014
+Contains Synopsys proprietary information.
+Compiler version I-2014.03-2; Runtime version I-2014.03-2;  Mar  4 16:18 2017
+
+
+Joseph Thornton Section 3
+X Y Z F
+0 0 0
+      0
+0 0 1
+0 1 0
+0 1 1
+      1
+1 0 0
+1 0 1
+1 1 0
+      0
+1 1 1
+      1
+$finish called from file "proj1atest.v", line 34.
+$finish at simulation time                    8
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 8
+CPU Time:      0.410 seconds;       Data structure size:   0.0Mb
+Sat Mar  4 16:18:45 2017
+[thorntjl@athena:24]> exit
+exit
+
+Script done on Sat 04 Mar 2017 04:18:50 PM PST
