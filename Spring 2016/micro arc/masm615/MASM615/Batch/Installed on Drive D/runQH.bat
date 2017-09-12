@@ -1,0 +1,4 @@
+PATH D:\masm615\bin
+SET HELPFILES=D:\MASM615\help\*.HLP
+set INIT=D:\Masm615\init
+QH

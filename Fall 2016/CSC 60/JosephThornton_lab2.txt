@@ -1,0 +1,567 @@
+Script started on Thu 22 Sep 2016 01:53:08 PM PDT
+[thorntjl@athena:21]> pwd
+
+/gaia/class/student/thorntjl/csc60
+[thorntjl@athena:22]> mdk[K[Kkdir xyz
+
+[thorntjl@athena:23]> cd xyz
+
+[thorntjl@athena:24]> pwd
+
+/gaia/class/student/thorntjl/csc60/xyz
+[thorntjl@athena:25]> cd csc60
+
+~/csc60 
+[thorntjl@athena:26]> pwd
+
+/gaia/class/student/thorntjl/csc60
+[thorntjl@athena:27]> ls>file1
+
+[thorntjl@athena:28]> cat file1
+
+a.out*
+file1
+JosephThornton_lab1.txt
+JosephThornton_lab2.txt
+lab1.c
+xyz/
+[thorntjl@athena:29]> less file1
+
+[?1049h[?1h=
+a.out*
+file1
+JosephThornton_lab1.txt
+JosephThornton_lab2.txt
+lab1.c
+xyz/
+[7mfile1 (END) [27m[K
+[K[?1l>[?1049l[thorntjl@athena:30]> file *
+
+a.out:                   ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.18, not stripped
+file1:                   ASCII text
+JosephThornton_lab1.txt: ASCII C program text, with CRLF, CR, LF line terminators
+JosephThornton_lab2.txt: empty
+lab1.c:                  ASCII C program text
+xyz:                     setgid directory
+[thorntjl@athena:31]> wc file1
+
+ 6  6 73 file1
+[thorntjl@athena:32]> wc *
+
+      7      61    4734 a.out
+      6       6      73 file1
+     32      72     571 JosephThornton_lab1.txt
+      0       0       0 JosephThornton_lab2.txt
+     18      32     281 lab1.c
+wc: xyz: Is a directory
+      0       0       0 xyz
+     63     171    5659 total
+[thorntjl@athena:33]> grep lab file1
+
+JosephThornton_lab1.txt
+JosephThornton_lab2.txt
+lab1.c
+[thorntjl@athena:34]> cp file1 file2
+
+[thorntjl@athena:35]> ls
+
+a.out*	file2			 JosephThornton_lab2.txt  xyz/
+file1	JosephThornton_lab1.txt  lab1.c
+[thorntjl@athena:36]> cd xyz
+
+[thorntjl@athena:37]> cp thorntjl/file1
+
+cp: missing destination file operand after `thorntjl/file1'
+Try `cp --help' for more information.
+[thorntjl@athena:38]> cp thorn[K[K[K[K[Kthor[K[K[K[Ksc[K[Kcsc60/file1
+
+cp: missing destination file operand after `csc60/file1'
+Try `cp --help' for more information.
+[thorntjl@athena:39]> cp csc60/file 1 file1
+
+cp: cannot stat `csc60/file1': No such file or directory
+[thorntjl@athena:40]> ls
+
+[thorntjl@athena:41]> pwd
+
+/gaia/class/student/thorntjl/csc60/xyz
+[thorntjl@athena:42]> cp ../file1
+
+cp: missing destination file operand after `../file1'
+Try `cp --help' for more information.
+[thorntjl@athena:43]> cp /[K../foe[K[Kile1 file1[K3
+
+[thorntjl@athena:44]> ls
+
+file3
+[thorntjl@athena:45]> mv file3 file1
+
+[thorntjl@athena:46]> ls
+
+file1
+[thorntjl@athena:47]> mv file1 file32[K[K2
+
+[thorntjl@athena:48]> ls'[K
+
+file2
+[thorntjl@athena:49]> mv ../file1
+
+mv: missing destination file operand after `../file1'
+Try `mv --help' for more information.
+[thorntjl@athena:50]> mv ../file 1 file1
+
+[thorntjl@athena:51]> ls
+
+file1  file2
+[thorntjl@athena:52]> f[Kcmp file1 file2
+
+[thorntjl@athena:53]> ls>xyzlist
+
+[thorntjl@athena:54]> cmp file1 xyzlist
+
+file1 xyzlist differ: byte 1, line 1
+[thorntjl@athena:55]> diff file1 xyzlist
+
+1d0
+< a.out*
+3,6c2,3
+< JosephThornton_lab1.txt
+< JosephThornton_lab2.txt
+< lab1.c
+< xyz/
+---
+> file2
+> xyzlist
+[thorntjl@athena:56]> rm file1
+
+[thorntjl@athena:57]> w
+
+ 14:02:59 up 30 days,  4:52, 48 users,  load average: 0.08, 0.14, 0.23
+USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+root     tty1     :0               23Aug16 30days  1:53   1:53  /usr/bin/Xorg :
+preussf  pts/0    ssisamd220-02.am 07:05   39:19   0.64s  0.55s pine
+pulidoc  pts/1    ec2-54-186-244-1 12:00    2:00m  0.15s  0.15s -bash
+root     pts/3    vulcan.ecs.csus. 09Sep16  6days  1:02m  1:02m top
+pulidoc  pts/5    ec2-54-186-244-1 12:02    2:00m  0.14s  0.14s -bash
+wahanea  pts/7    kronos6.ecs.csus Wed12   25:44m  0.08s  0.08s -csh
+boudreat pts/10   destroyer.troysp 09Sep16  1:21m 17.33s 17.18s ssh pc2
+thorntjl pts/12   -                13:53    0.00s  0.14s  0.01s w
+pulidoc  pts/13   ec2-54-69-152-24 10:31    3:06m  0.19s  0.19s -bash
+nguyekh  pts/15   mail.fppc.ca.gov 12:17    1:45m  0.09s  0.09s -tcsh
+root     pts/16   tycho.ecs.csus.e 07Sep16 13days  0.16s  0.16s -bash
+longr    pts/17   99-137-224-13.li 10:01   48:39   1.07s  1.07s -bash
+scroggir pts/18   cpe-45-37-78-192 Wed17   18:12m  0.09s  0.09s -csh
+kovillt  pts/19   10.117.230.5     13:57    5:52   0.08s  0.08s -csh
+saechaoa pts/20   bester.ecs.csus. Wed10   24:11m  0.08s  0.08s -csh
+mammetb  pts/23   99-63-152-93.lig 13:42   11:51   0.09s  0.09s -csh
+poosarla pts/24   c-73-151-104-213 12:37   34:02   0.17s  0.09s ssh -l poosarla
+kumarn   pts/25   han.ecs.csus.edu 13:13    4:25   0.37s  0.12s pine
+singjasd pts/26   panaka.ecs.csus. 13:08    2:02   0.31s  0.17s vim lab01.s
+vuek     pts/27   10.117.94.162    13:25    1.00s  0.46s  0.38s ssh atoz
+pulidoc  pts/28   ec2-54-186-244-1 10:59    2:47m  0.22s  0.22s -bash
+pauleye  pts/29   10.113.38.21     13:45    0.00s  0.26s  0.13s vim test.disAsm
+mazharm  pts/30   jerjerrod.ecs.cs 13:59    1:57   0.27s  0.19s pine
+seacore  pts/31   10.113.161.22    12:34   55:36   0.24s  0.24s -bash
+zhangc   pts/32   happy.ecs.csus.e 13:27   13:47   0.99s  0.90s pine
+obinnau  pts/33   10.117.178.228   13:45   14:58   0.08s  0.08s -csh
+hangm    pts/34   jabba.ecs.csus.e 13:14    4.00s  0.41s  0.17s pine
+jauregue pts/35   thrawn.ecs.csus. 13:13    1.00s  0.20s  0.09s nano hey.s
+longr    pts/36   99-137-224-13.li 12:53    1:08m  0.16s  0.16s -bash
+hoangb   pts/37   mace.ecs.csus.ed 13:54    6:43   0.21s  0.13s pine
+gloverb  pts/38   owen.ecs.csus.ed 13:08    5.00s  0.29s  0.10s pine
+ellib    pts/39   ozzel.ecs.csus.e 13:11    1.00s  0.30s  0.14s pine
+wrightr  pts/40   maul.ecs.csus.ed 13:08    1.00s  0.24s  0.24s -csh
+duongj   pts/41   oola.ecs.csus.ed 13:08    0.00s  0.23s  0.09s pine
+panchals pts/22   127.0.0.1:52.0   12:07    1:45m  0.06s  0.06s -bin/csh
+janardhn pts/21   127.0.0.1:3.0    11Sep16 10days  0.32s  0.24s /software/sml/b
+tuc      pts/43   vader.ecs.csus.e 13:08    1.00s  0.33s  0.17s nano lab1.s
+mouak    pts/44   binks.ecs.csus.e 13:08    1:03   0.33s  0.33s -csh
+cookd    pts/45   ackbar.ecs.csus. 13:08    7:53   0.25s  0.12s pine
+akhterod pts/46   padme.ecs.csus.e 13:14    2:51   0.15s  0.15s -csh
+kutsarv  pts/48   mothma.ecs.csus. 13:09    4.00s  0.26s  0.13s pine
+lopezl   pts/51   10.117.200.171   13:51   11:13   0.11s  0.04s ssh atoz
+hoangb   pts/52   mace.ecs.csus.ed 13:31   23.00s  0.12s  0.00s nano lab1.s
+aguirreb pts/53   10.117.127.29    13:31    0.00s  0.14s  0.07s pine
+thorntjl pts/54   10.117.67.93     13:31    0.00s  0.15s  0.01s script JosephTh
+penna    pts/56   10.117.25.90     13:47    9:30   0.09s  0.09s -csh
+barrowh  pts/57   10.117.14.145    13:32    1.00s  0.19s  0.11s pine
+numairn  pts/2    127.0.0.1:1.0    08:10    5:52m  0.06s  0.06s -bin/csh
+[thorntjl@athena:58]> who
+
+root     tty1         2016-08-23 09:11 (:0)
+preussf  pts/0        2016-09-22 07:05 (ssisamd220-02.amdlab.csus.edu)
+pulidoc  pts/1        2016-09-22 12:00 (ec2-54-186-244-104.us-west-2.compute.amazonaws.com)
+root     pts/3        2016-09-09 09:17 (vulcan.ecs.csus.edu)
+pulidoc  pts/5        2016-09-22 12:02 (ec2-54-186-244-104.us-west-2.compute.amazonaws.com)
+wahanea  pts/7        2016-09-21 12:17 (kronos6.ecs.csus.edu)
+boudreat pts/10       2016-09-09 12:06 (destroyer.troyspaws.com)
+thorntjl pts/12       2016-09-22 13:53
+pulidoc  pts/13       2016-09-22 10:31 (ec2-54-69-152-243.us-west-2.compute.amazonaws.com)
+nguyekh  pts/15       2016-09-22 12:17 (mail.fppc.ca.gov)
+root     pts/16       2016-09-07 17:37 (tycho.ecs.csus.edu)
+longr    pts/17       2016-09-22 10:01 (99-137-224-13.lightspeed.nscrca.sbcglobal.net)
+scroggir pts/18       2016-09-21 17:19 (cpe-45-37-78-192.nc.res.rr.com)
+kovillt  pts/19       2016-09-22 13:57 (10.117.230.5)
+saechaoa pts/20       2016-09-21 10:08 (bester.ecs.csus.edu)
+mammetb  pts/23       2016-09-22 13:42 (99-63-152-93.lightspeed.frokca.sbcglobal.net)
+poosarla pts/24       2016-09-22 12:37 (c-73-151-104-213.hsd1.ca.comcast.net)
+kumarn   pts/25       2016-09-22 13:13 (han.ecs.csus.edu)
+singjasd pts/26       2016-09-22 13:08 (panaka.ecs.csus.edu)
+vuek     pts/27       2016-09-22 13:25 (10.117.94.162)
+pulidoc  pts/28       2016-09-22 10:59 (ec2-54-186-244-104.us-west-2.compute.amazonaws.com)
+pauleye  pts/29       2016-09-22 13:45 (10.113.38.21)
+mazharm  pts/30       2016-09-22 13:59 (jerjerrod.ecs.csus.edu)
+seacore  pts/31       2016-09-22 12:34 (10.113.161.22)
+zhangc   pts/32       2016-09-22 13:27 (happy.ecs.csus.edu)
+obinnau  pts/33       2016-09-22 13:45 (10.117.178.228)
+hangm    pts/34       2016-09-22 13:14 (jabba.ecs.csus.edu)
+jauregue pts/35       2016-09-22 13:13 (thrawn.ecs.csus.edu)
+longr    pts/36       2016-09-22 12:53 (99-137-224-13.lightspeed.nscrca.sbcglobal.net)
+hoangb   pts/37       2016-09-22 13:54 (mace.ecs.csus.edu)
+gloverb  pts/38       2016-09-22 13:08 (owen.ecs.csus.edu)
+ellib    pts/39       2016-09-22 13:11 (ozzel.ecs.csus.edu)
+wrightr  pts/40       2016-09-22 13:08 (maul.ecs.csus.edu)
+duongj   pts/41       2016-09-22 13:08 (oola.ecs.csus.edu)
+panchals pts/22       2016-09-22 12:07 (127.0.0.1:52.0)
+janardhn pts/21       2016-09-11 16:02 (127.0.0.1:3.0)
+tuc      pts/43       2016-09-22 13:08 (vader.ecs.csus.edu)
+mouak    pts/44       2016-09-22 13:08 (binks.ecs.csus.edu)
+cookd    pts/45       2016-09-22 13:08 (ackbar.ecs.csus.edu)
+akhterod pts/46       2016-09-22 13:14 (padme.ecs.csus.edu)
+kutsarv  pts/48       2016-09-22 13:09 (mothma.ecs.csus.edu)
+lopezl   pts/51       2016-09-22 13:51 (10.117.200.171)
+hoangb   pts/52       2016-09-22 13:31 (mace.ecs.csus.edu)
+aguirreb pts/53       2016-09-22 13:31 (10.117.127.29)
+thorntjl pts/54       2016-09-22 13:31 (10.117.67.93)
+penna    pts/56       2016-09-22 13:47 (10.117.25.90)
+barrowh  pts/57       2016-09-22 13:32 (10.117.14.145)
+numairn  pts/2        2016-09-22 08:10 (127.0.0.1:1.0)
+[thorntjl@athena:59]> ps-u
+
+ps-u: Command not found.
+[thorntjl@athena:60]> ps -uy[K
+
+Warning: bad syntax, perhaps a bogus '-'? See /usr/share/doc/procps-3.2.8/FAQ
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+thorntjl  5776  0.0  0.0   4140   724 pts/54   S+   13:53   0:00 script JosephTh
+thorntjl  5778  0.0  0.0   4652   364 pts/54   S+   13:53   0:00 script JosephTh
+thorntjl  5779  0.0  0.0   5276  1696 pts/12   Ss   13:53   0:00 -sh -i
+thorntjl 12810  0.0  0.0   5492  1888 pts/54   Ss   13:31   0:00 -csh
+thorntjl 18039  3.0  0.0   5100  1204 pts/12   R+   14:03   0:00 ps -u
+[thorntjl@athena:61]> !!
+
+ps -u
+Warning: bad syntax, perhaps a bogus '-'? See /usr/share/doc/procps-3.2.8/FAQ
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+thorntjl  5776  0.0  0.0   4140   724 pts/54   S+   13:53   0:00 script JosephTh
+thorntjl  5778  0.0  0.0   4652   364 pts/54   S+   13:53   0:00 script JosephTh
+thorntjl  5779  0.0  0.0   5276  1696 pts/12   Ss   13:53   0:00 -sh -i
+thorntjl 12810  0.0  0.0   5492  1888 pts/54   Ss   13:31   0:00 -csh
+thorntjl 18146  3.0  0.0   5100  1204 pts/12   R+   14:04   0:00 ps -u
+[thorntjl@athena:62]> history
+
+     2	13:35	cd thorntjl
+     7	13:37	fil*
+     9	13:37	wc*
+    16	13:40	cp thorntjl/file1 file1
+    17	13:41	exit script
+    18	13:41	close script
+    19	13:41	end script
+    20	13:42	exit
+    22	13:53	mkdir xyz
+    25	13:53	cd csc60
+    27	13:53	ls > file1
+    28	13:54	cat file1
+    29	13:54	less file1
+    30	13:54	file *
+    31	13:54	wc file1
+    32	13:54	wc *
+    33	13:54	grep lab file1
+    34	13:55	cp file1 file2
+    36	13:55	cd xyz
+    37	13:56	cp thorntjl/file1
+    38	13:56	cp csc60/file1
+    39	13:56	cp csc60/file1 file1
+    41	13:57	pwd
+    42	13:58	cp ../file1
+    43	13:59	cp ../file1 file3
+    45	13:59	mv file3 file1
+    47	13:59	mv file1 file2
+    49	14:00	mv ../file1
+    50	14:00	mv ../file1 file1
+    51	14:00	ls
+    52	14:00	cmp file1 file2
+    53	14:01	ls > xyzlist
+    54	14:01	cmp file1 xyzlist
+    55	14:02	diff file1 xyzlist
+    56	14:02	rm file1
+    57	14:02	w
+    58	14:03	who
+    59	14:03	ps-u
+    61	14:04	ps -u
+    62	14:04	history
+[thorntjl@athena:63]> !3
+
+3: Event not found.
+[thorntjl@athena:63]> !history[K[K[K[K[K[K[K!17
+
+exit script
+exit: Expression Syntax.
+[thorntjl@athena:64]> cd csc60
+
+~/csc60 
+[thorntjl@athena:65]> ls
+
+a.out*	file2  JosephThornton_lab1.txt	JosephThornton_lab2.txt  lab1.c  xyz/
+[thorntjl@athena:66]> script -a JosephThornton_lab1f.[K[K.txt
+
+Script started, file is JosephThornton_lab1.txt
+[thorntjl@athena:21]> cd cdsc[K[K[Ksc60
+
+~/csc60 
+[thorntjl@athena:22]> head lab1.c
+
+/*Joseph Thornton*/
+/*Section 1      */
+/*lab1           */
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+
+int main(void)
+[thorntjl@athena:23]> tail lavb[K[Kb1.c
+
+
+int main(void)
+{
+ printf("\nLab 1 \n\n");
+ printf("Hi,Joseph Thornton \n\n"); 
+ printf("if at first you fail try try again!\n\n");
+ return EXIT_SUCCESS;
+}
+/*-----------------*/
+
+[thorntjl@athena:24]> ls -all\[K|[K | less
+
+[?1049h[?1h=
+total 56
+drwx--S--- 3 thorntjl stdcsc  4096 Sep 22 14:00 ./
+drwx--s--x 6 thorntjl stdcsc  4096 Sep 22 13:49 ../
+-rwx------ 1 thorntjl stdcsc  4734 Sep 13 20:14 a.out*
+-rw------- 1 thorntjl stdcsc    73 Sep 22 13:55 file2
+-rw------- 1 thorntjl stdcsc   571 Sep 13 20:16 JosephThornton_lab1.txt
+-rw------- 1 thorntjl stdcsc     0 Sep 22 13:53 JosephThornton_lab2.txt
+-rw------- 1 thorntjl stdcsc   281 Sep 13 20:13 lab1.c
+-rw------- 1 thorntjl stdcsc 12288 Sep 13 20:11 .lab1.c.swo
+-rw------- 1 thorntjl stdcsc 12288 Sep 13 20:05 .lab1.c.swp
+drwx--S--- 2 thorntjl stdcsc  4096 Sep 22 14:02 xyz/
+[7m(END) [27m[K
+[K
+[K[7m(END) [27m[K
+[K
+[K[7m(END) [27m[K
+[K...skipping...
+total 56
+drwx--S--- 3 thorntjl stdcsc  4096 Sep 22 14:00 ./
+drwx--s--x 6 thorntjl stdcsc  4096 Sep 22 13:49 ../
+-rwx------ 1 thorntjl stdcsc  4734 Sep 13 20:14 a.out*
+-rw------- 1 thorntjl stdcsc    73 Sep 22 13:55 file2
+-rw------- 1 thorntjl stdcsc   571 Sep 13 20:16 JosephThornton_lab1.txt
+-rw------- 1 thorntjl stdcsc     0 Sep 22 13:53 JosephThornton_lab2.txt
+-rw------- 1 thorntjl stdcsc   281 Sep 13 20:13 lab1.c
+-rw------- 1 thorntjl stdcsc 12288 Sep 13 20:11 .lab1.c.swo
+-rw------- 1 thorntjl stdcsc 12288 Sep 13 20:05 .lab1.c.swp
+drwx--S--- 2 thorntjl stdcsc  4096 Sep 22 14:02 xyz/
+[1m~[0m
+[1m~[0m
+[1m~[0m
+[1m~[0m
+[1m~[0m
+[1m~[0m
+[1m~[0m
+[1m~[0m
+[1m~[0m
+[1m~[0m
+[1m~[0m
+[1m~[0m
+[7m(END) [27m[K
+[K[?1l>[?1049l[thorntjl@athena:25]> history
+
+     1	13:35	mkdir xyz
+     2	13:35	cd thorntjl
+     3	13:36	pwd
+     4	13:36	ls > file1
+     5	13:36	cat file1
+     6	13:36	less file1
+     7	13:37	fil*
+     8	13:37	wc file1
+     9	13:37	wc*
+    10	13:37	wc *
+    11	13:37	grep lab file1
+    12	13:38	cp file1 file2
+    13	13:38	cd xyz
+    14	13:39	ls
+    15	13:40	cp thorntjl/file1
+    16	13:40	cp thorntjl/file1 file1
+    17	13:41	exit script
+    18	13:41	close script
+    19	13:41	end script
+    20	13:42	exit
+    21	14:06	cd csc60
+    22	14:07	head lab1.c
+    23	14:07	tail lab1.c
+    24	14:08	ls -all | less
+    25	14:08	history
+[thorntjl@athena:26]> exit
+
+exit
+Script done, file is JosephThornton_lab1.txt
+[thorntjl@athena:67]> echo $SHELL
+
+/bin/csh
+[thorntjl@athena:68]> exit
+[thorntjl@athena:19]> cat lab1.c
+
+/*Joseph Thornton*/
+/*Section 1      */
+/*lab1           */
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+
+int main(void)
+{
+ printf("\nLab 1 \n\n");
+ printf("Hi,Joseph Thornton \n\n"); 
+ printf("if at first you fail try try again!\n\n");
+ return EXIT_SUCCESS;
+}
+/*-----------------*/
+
+[thorntjl@athena:20]> a.out
+
+
+Lab 1 
+
+Hi,Joseph Thornton 
+
+if at first you fail try try again!
+
+[thorntjl@athena:21]> exit
+
+exit
+
+Script done on Tue 13 Sep 2016 08:16:57 PM PDT
+Script started on Thu 22 Sep 2016 02:06:47 PM PDT
+[thorntjl@athena:21]> cd cdsc[K[K[Ksc60
+
+~/csc60 
+[thorntjl@athena:22]> head lab1.c
+
+/*Joseph Thornton*/
+/*Section 1      */
+/*lab1           */
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+
+int main(void)
+[thorntjl@athena:23]> tail lavb[K[Kb1.c
+
+
+int main(void)
+{
+ printf("\nLab 1 \n\n");
+ printf("Hi,Joseph Thornton \n\n"); 
+ printf("if at first you fail try try again!\n\n");
+ return EXIT_SUCCESS;
+}
+/*-----------------*/
+
+[thorntjl@athena:24]> ls -all\[K|[K | less
+
+[?1049h[?1h=
+total 56
+drwx--S--- 3 thorntjl stdcsc  4096 Sep 22 14:00 ./
+drwx--s--x 6 thorntjl stdcsc  4096 Sep 22 13:49 ../
+-rwx------ 1 thorntjl stdcsc  4734 Sep 13 20:14 a.out*
+-rw------- 1 thorntjl stdcsc    73 Sep 22 13:55 file2
+-rw------- 1 thorntjl stdcsc   571 Sep 13 20:16 JosephThornton_lab1.txt
+-rw------- 1 thorntjl stdcsc     0 Sep 22 13:53 JosephThornton_lab2.txt
+-rw------- 1 thorntjl stdcsc   281 Sep 13 20:13 lab1.c
+-rw------- 1 thorntjl stdcsc 12288 Sep 13 20:11 .lab1.c.swo
+-rw------- 1 thorntjl stdcsc 12288 Sep 13 20:05 .lab1.c.swp
+drwx--S--- 2 thorntjl stdcsc  4096 Sep 22 14:02 xyz/
+[7m(END) [27m[K
+[K
+[K[7m(END) [27m[K
+[K
+[K[7m(END) [27m[K
+[K...skipping...
+total 56
+drwx--S--- 3 thorntjl stdcsc  4096 Sep 22 14:00 ./
+drwx--s--x 6 thorntjl stdcsc  4096 Sep 22 13:49 ../
+-rwx------ 1 thorntjl stdcsc  4734 Sep 13 20:14 a.out*
+-rw------- 1 thorntjl stdcsc    73 Sep 22 13:55 file2
+-rw------- 1 thorntjl stdcsc   571 Sep 13 20:16 JosephThornton_lab1.txt
+-rw------- 1 thorntjl stdcsc     0 Sep 22 13:53 JosephThornton_lab2.txt
+-rw------- 1 thorntjl stdcsc   281 Sep 13 20:13 lab1.c
+-rw------- 1 thorntjl stdcsc 12288 Sep 13 20:11 .lab1.c.swo
+-rw------- 1 thorntjl stdcsc 12288 Sep 13 20:05 .lab1.c.swp
+drwx--S--- 2 thorntjl stdcsc  4096 Sep 22 14:02 xyz/
+[1m~[0m
+[1m~[0m
+[1m~[0m
+[1m~[0m
+[1m~[0m
+[1m~[0m
+[1m~[0m
+[1m~[0m
+[1m~[0m
+[1m~[0m
+[1m~[0m
+[1m~[0m
+[7m(END) [27m[K
+[K[?1l>[?1049l[thorntjl@athena:25]> history
+
+     1	13:35	mkdir xyz
+     2	13:35	cd thorntjl
+     3	13:36	pwd
+     4	13:36	ls > file1
+     5	13:36	cat file1
+     6	13:36	less file1
+     7	13:37	fil*
+     8	13:37	wc file1
+     9	13:37	wc*
+    10	13:37	wc *
+    11	13:37	grep lab file1
+    12	13:38	cp file1 file2
+    13	13:38	cd xyz
+    14	13:39	ls
+    15	13:40	cp thorntjl/file1
+    16	13:40	cp thorntjl/file1 file1
+    17	13:41	exit script
+    18	13:41	close script
+    19	13:41	end script
+    20	13:42	exit
+    21	14:06	cd csc60
+    22	14:07	head lab1.c
+    23	14:07	tail lab1.c
+    24	14:08	ls -all | less
+    25	14:08	history
+[thorntjl@athena:26]> exit
+
+exit
+
+Script done on Thu 22 Sep 2016 02:08:39 PM PDT
+
+
+exit
+
+Script done on Thu 22 Sep 2016 02:09:20 PM PDT

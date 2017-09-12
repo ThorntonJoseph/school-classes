@@ -1,0 +1,1 @@
+copy hexcnv32.lib c:\masm611\lib /y

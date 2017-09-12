@@ -1,0 +1,40 @@
+Script started on Thu 04 May 2017 09:41:07 AM PDT
+[thorntjl@athena:20]> 11111110[23G[24@000000010000000111111111[55G[23Gsimv[Kvcs +v2k testbench.v[23Gsimv'[K[23Gvcs +v2k tes2.v[23Gclock=0 ;[K[23G1 00000 1 1[K[K[K[K[K[K[K[Ksimv
+Chronologic VCS simulator copyright 1991-2014
+Contains Synopsys proprietary information.
+Compiler version I-2014.03-2; Runtime version I-2014.03-2;  May  4 09:41 2017
+ 0  00  0
+a=01  b=02  c=ff  d=fe 
+15  01  0
+25  03  0
+35  04  0
+45  06  1
+75  00  0
+a=fe  b=01  c=01  d=04 
+85  fe  0
+95  fd  0
+105  fe  0
+115  fa  1
+145  00  0
+a=01  b=ff  c=ff  d=ff 
+155  01  0
+165  00  0
+175  01  0
+185  02  1
+215  00  0
+a=ff  b=01  c=ff  d=01 
+225  ff  0
+235  fe  0
+245  fd  0
+255  fc  1
+285  00  0
+$finish called from file "testbench.v", line 43.
+$finish at simulation time                  350
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 350
+CPU Time:      0.300 seconds;       Data structure size:   0.0Mb
+Thu May  4 09:41:23 2017
+[thorntjl@athena:21]> exit
+exit
+
+Script done on Thu 04 May 2017 09:41:25 AM PDT

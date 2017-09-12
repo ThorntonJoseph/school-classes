@@ -1,0 +1,83 @@
+Microsoft (R) Macro Assembler Version 5.10                  3/17/16 13:46:34
+                                                             Page     1-1
+
+
+       1				dosseg
+       2				.model small
+       3				.stack 200h
+       4				.data
+       5				.code
+       6 0000				hexbin proc
+       7 0000  B8 ---- R		mov ax,@data
+       8 0003  8E D8			mov ds,ax
+       9 0005  BA ABCD			mov dx,0abcdh
+      10 0008  B4 02			mov ah,02
+      11 000A  B9 000F			mov cx,0fh
+      12 000D  BB 0000			mov bx,0
+      13 0010				reverse:
+      14 0010  52			push dx
+      15 0011  83 E2 01			and dx,1
+      16 0014  03 DA			add bx,dx
+      17 0016  D1 E3			shl bx,1
+      18 0018  5A			pop dx
+      19 0019  D1 CA			ror dx,1
+      20 001B  49			dec cx
+      21 001C  75 F2			jnz reverse
+      22 001E  83 E2 01			and dx,1
+      23 0021  03 DA			add bx,dx
+      24 0023  8B D3			mov dx,bx
+      25 0025  B9 0010			mov cx,0010h
+      26				
+      27 0028				send:
+      28 0028  D1 C2			rol dx,1
+      29 002A  52			push dx
+      30 002B  83 E2 01			and dx,0001
+      31 002E  83 C2 30			add dx,30h
+      32 0031  CD 21			int 21h
+      33 0033  5A			pop dx
+      34 0034  49			dec cx
+      35 0035  75 F1			jnz send
+      36 0037  CC			int 3
+      37 0038  B8 4C00			mov ax,4c00h
+      38 003B  CD 21			int 21h
+      39 003D				hexbin endp
+      40				end
+Microsoft (R) Macro Assembler Version 5.10                  3/17/16 13:46:34
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+DGROUP . . . . . . . . . . . . .  	GROUP
+  _DATA  . . . . . . . . . . . .  	0000	WORD	PUBLIC	'DATA'
+  STACK  . . . . . . . . . . . .  	0200	PARA	STACK	'STACK'
+_TEXT  . . . . . . . . . . . . .  	003D	WORD	PUBLIC	'CODE'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+HEXBIN . . . . . . . . . . . . .  	N PROC	0000	_TEXT	Length = 003D
+
+REVERSE  . . . . . . . . . . . .  	L NEAR	0010	_TEXT
+
+SEND . . . . . . . . . . . . . .  	L NEAR	0028	_TEXT
+
+@CODE  . . . . . . . . . . . . .  	TEXT  _TEXT		
+@CODESIZE  . . . . . . . . . . .  	TEXT  0		
+@CPU . . . . . . . . . . . . . .  	TEXT  0101h		
+@DATASIZE  . . . . . . . . . . .  	TEXT  0		
+@FILENAME  . . . . . . . . . . .  	TEXT  joesp		
+@VERSION . . . . . . . . . . . .  	TEXT  510		
+
+
+     40 Source  Lines
+     40 Total   Lines
+     24 Symbols
+
+  47350 + 461829 Bytes symbol space free
+
+      0 Warning Errors
+      0 Severe  Errors

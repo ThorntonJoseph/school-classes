@@ -1,0 +1,32 @@
+Script started on Tue 13 Sep 2016 08:16:13 PM PDT
+[thorntjl@athena:19]> cat lab1.c
+/*Joseph Thornton*/
+/*Section 1      */
+/*lab1           */
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+
+int main(void)
+{
+ printf("\nLab 1 \n\n");
+ printf("Hi,Joseph Thornton \n\n"); 
+ printf("if at first you fail try try again!\n\n");
+ return EXIT_SUCCESS;
+}
+/*-----------------*/
+
+[thorntjl@athena:20]> a.out
+
+Lab 1 
+
+Hi,Joseph Thornton 
+
+if at first you fail try try again!
+
+[thorntjl@athena:21]> exit
+exit
+
+Script done on Tue 13 Sep 2016 08:16:57 PM PDT

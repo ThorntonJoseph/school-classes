@@ -1,0 +1,84 @@
+Microsoft (R) Macro Assembler Version 6.15.8803		    12/28/09 20:05:05
+MASM hex2asc			(hex2asc.asm)		     Page 1 - 1
+
+
+				TITLE MASM hex2asc			(hex2asc.asm)
+
+				.686P		; Pentium Pro or later
+				.MODEL flat, stdcall
+				.STACK 4096
+					
+ 00000000				.CODE
+
+
+
+				;hex to ascii conversion routine
+				;inputs AL input number between 0 and 0Fh
+				;outputs AL ascii character between 0 and F
+				;	 AH returns number out of range if 1 otherwise 0
+
+ 00000000			HEX_TO_ASCII	PROC     	NEAR	PUBLIC
+ 00000000  B4 00			MOV	AH,0		;Clear return error
+
+ 00000002  3C 09			CMP	AL,9H		;test for 0 to 9
+ 00000004  7F 08			JG	ALPHABET
+ 00000006  3C 00			CMP	AL,0H
+ 00000008  7C 0C			JL	CONVERT_ERROR
+ 0000000A  04 30			ADD	AL,30H
+ 0000000C  EB 0A			JMP	CONVERT_DONE
+ 0000000E			ALPHABET:
+ 0000000E  3C 0F			CMP	AL,0FH		;test for A to F
+ 00000010  7F 04			JG	CONVERT_ERROR
+
+ 00000012  04 37			ADD	AL,37H
+ 00000014  EB 02			JMP	CONVERT_DONE
+
+ 00000016			CONVERT_ERROR:
+ 00000016  B4 01			MOV	AH,1		;set invalid number error
+ 00000018			CONVERT_DONE:
+ 00000018  C3				RET
+ 00000019			HEX_TO_ASCII	ENDP
+					
+					END   		;End of program
+Microsoft (R) Macro Assembler Version 6.15.8803		    12/28/09 20:05:05
+MASM hex2asc			(hex2asc.asm)		     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000000 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000019 Para	  Public  'CODE'	
+
+
+Procedures,  parameters and locals:
+
+                N a m e                 Type     Value    Attr
+
+HEX_TO_ASCII . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000019 Public STDCALL
+  ALPHABET . . . . . . . . . . .	L Near	 0000000E _TEXT	
+  CONVERT_ERROR  . . . . . . . .	L Near	 00000016 _TEXT	
+  CONVERT_DONE . . . . . . . . .	L Near	 00000018 _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+
+	   0 Warnings
+	   0 Errors

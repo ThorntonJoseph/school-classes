@@ -1,0 +1,4 @@
+mount x c:\student
+x:
+\masm51\initpath
+cd scale

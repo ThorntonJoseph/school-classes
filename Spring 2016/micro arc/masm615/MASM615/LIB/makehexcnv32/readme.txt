@@ -1,0 +1,3 @@
+this directory has the object files needed to create the hexcnt32 library for the calculator exercize. the make32lib.bat file calls the 32 bit version of lib.exe file which in turn calls the link.exe file. The mspdb80.dll file must be in the same directory to execute the linker (or placed in the windows/system32 directory).
+
+the install.bat copies the hexcnv32.lib into the masm611\lib directory to be used be the assembler program of choice.

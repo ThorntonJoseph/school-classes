@@ -1,0 +1,37 @@
+`include "/gaia/class/student/thorntjl/csc137/proj1d.v"
+module test1a();
+
+reg x,y,z;
+wire f1,f2,f;
+proj1d a1(x,y,z,f);
+initial begin
+$display("\n\nJoseph Thornton Section 3\nX Y Z F");
+$monitor("      %b",f);
+x=0; y=0; z=0; $display("%b %b %b",x,y,z);
+//test1
+#1
+x=0;y=0;z=1; $display("%b %b %b",x,y,z);
+//test2
+#1
+x=0;y=1;z=0; $display("%b %b %b",x,y,z);
+//test3
+#1
+x=0;y=1;z=1; $display("%b %b %b",x,y,z);
+//test4
+#1
+x=1;y=0;z=0; $display("%b %b %b",x,y,z);
+//test5
+#1
+x=1;y=0;z=1; $display("%b %b %b",x,y,z);
+//test6
+#1
+x=1;y=1;z=0; $display("%b %b %b",x,y,z);
+//test7
+#1
+x=1;y=1;z=1; $display("%b %b %b",x,y,z);
+//test8
+#1
+$finish; 
+end 
+endmodule
+

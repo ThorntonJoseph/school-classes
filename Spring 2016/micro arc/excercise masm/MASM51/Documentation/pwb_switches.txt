@@ -1,0 +1,349 @@
+Compiler and Linker Switches
+
+    The behavior of the compiler and the linker are defined by one or
+    more command-line arguments (or switches) that have the general form
+    /XXX, where XXX is a string of one or more letters and digits. The
+    compiler switches can be broken into several functional categories:
+
+                Memory Models
+                Code Generation
+                Preprocessor
+                PWB
+                Floating Point Source Listing (not supported by QuickC)
+                Optimizer
+                Files
+                Language
+                Linker
+                Assembler
+                Source Listing
+                Naming Modules and Segments
+                Customizing Memory Models
+                Miscellaneous
+
+       Note:    The case of the compiler options is significant: if there
+                were a switch /UPPER, for example, it would not be
+                properly recognized if you typed /upper.
+
+                /HELP (and /help) is a special switch: it causes a
+                summary of the command-line switches to be displayed on
+                the console.
+
+   -------------------------- Memory Model Switches -------------------------
+
+         /Am    where m is one of T, S, C, M, L or H to represent the
+                tiny, small, compact, medium, large and huge models,
+                respectively. Note that /Ah (huge) is not supported by QuickC.
+
+   ---------------------- Code Generation Switches --------------------------
+
+   /B2[path]    Invoke alternative pass two compiler also called C2L.EXE
+
+   /B2[path]    Invoke alternative pass three compiler also called C3L.EXE
+
+         /Gc    Generate MS-Pascal and MS-Fortran style function calls.
+
+         /Gd    Specifies standard C calling conventions (i.e. default)
+
+         /Ge    Enables calls to stack checking routine.
+
+         /Gi    Specifies the compiler should compile incrementally.
+
+         /Gn    where n 0, 1 or 2 to represent 8086, 80186 or 80286
+                instructions, respectively. Note that /G1 (80186) is not
+                supported by QuickC.
+
+         /Gc    Generate MS-Pascal and MS-Fortran style function calls.
+
+         /Gm    Allocate 'near const' items in the CONST segment. This is
+                primarily useful for developing "ROM-able" code. /Gm is
+                not supported by QuickC.
+
+         /Gm    Enable _fastcall function (where possible, pass values
+                on register, not stack).
+
+         /Gs    Disable stack probe checking. This affects the #pragma
+                check_stack.
+
+      /Gt[n]    Use with compact, large and huge memory models to create
+                new data segments based on the object size n. If n is
+                omitted it defaults to 256.
+
+         /Gw    Generate programs to run in an MS-Windows environment.
+
+         /GW    Same as, but more efficient than, /Gw; not used for
+                user callback functions.
+
+         /MD    Create a .DLL (OS/2) library.
+
+         /ML    Statically links C run-time library functions as part
+                of a .DLL library (OS/2).
+
+         /MT    Enable support for multithread code (OS/2).
+
+         /WX    Make all warnings fatal.
+
+   ------------------------- Preprocessor Switches---------------------------
+
+   /B1[path]    Invoke alternate preprocessor (also named C1L.EXE).
+
+          /C    Don't remove comments from the source file.
+
+         /Dname[=macro-def]
+                Define a macro name with a value (no arguments).
+
+          /E    Preprocess the source to stdout.
+
+         /EP    Combines /E and /P but no #line directives are written
+                out.
+
+      /Ipath    Specify a header #include path.
+
+          /P    Preprocess the source to a file of the same name with
+                type .I.
+
+      /Uname    Remove a predefined macro definition.
+
+          /u    Remove all predefined macro definitions.
+
+          /X    Do not search the standard places when looking for
+                headers.
+
+   ------------------------- PWB Switches ---------------------------------
+
+   /Fr[file]    Generate standard Programmers Work Bench browse file.
+
+   /FR[file]    Generate extended Programmers Work Bench browse file.
+
+   ------------------------ Floating Point Switches -------------------------
+
+        /FPi    Generate inline code and use the Floating Point emulator
+                (default).
+
+        /FPc    Generate calls and use the FP emulator. Not supported by
+                QuickC.
+
+      /FPc87    Generate calls and use the 8087 library. Not supported by
+                QuickC.
+
+      /FPi87    Generate inline code and use the 8087.
+
+        /FPa    Generate calls and use the alternate math library. Not
+                supported by QuickC.
+
+   -------------------------- Optimizer Switches ----------------------------
+
+          /O    Enable optimization. (same as /Ot)
+
+         /Oa    Relax alias checking. Not supported by QuickC.
+
+         /Oc    Enable default local common expressions.
+
+         /Od    Disable optimization.
+
+         /Oe    Enable global register allocation.
+
+         /Og    Enable global optimizations and global common
+                expressions.
+
+         /Oi    Enable intrinsic functions. Not supported by QuickC.
+
+         /Ol    Enable loop optimization.
+
+         /On    Disable "unsafe" optimization. Not supported by QuickC.
+
+         /Op    Improve consistency of floating point results. Not
+                supported by QuickC.
+
+         /Or    Disable in-line return. Not supported by QuickC.
+
+         /Os    Optimize for code size. Not supported by QuickC.
+
+         /Ot    Optimize for execution speed (the default).
+
+         /Ow    Disable alias checking, except across function calls. Not
+                supported by QuickC.
+
+         /Ox    Maximize optimization. (Equivalent to using /OaILT /Gs
+                for C-compiler; /Ot2 for QuickC.)
+
+         /Oz    Enable maximum loop and global register allocation
+                to be optimized.
+
+   ----------------------------- File Switches ------------------------------
+
+         /Fd[bound-executable-file]     
+                To create OS/2 "bound" programs.
+
+         /Fc[object+source-list-file]
+                Specify the name of the object/source listing file. The
+                file type defaults to .COD. Not supported by QuickC.
+
+         /Fe[executable-file-name]
+                Specify the name of the executable file. The file type
+                defaults to .EXE.
+
+         /Fl[object-list-file]
+                Specify the name of the object listing file. The file
+                type defaults to .COD. Not supported by QuickC.
+
+         /Fm[map-file-name]
+                Specify the name of the executable file. The file type
+                defaults to .EXE.
+
+         /Fo[object-file]
+                Names the object file to be created by the compiler. The
+                default file type is .OBJ.
+
+         /Fs[source-list-file]
+                Names the source listing file. The default file type is
+                .LST. Not supported by QuickC.
+
+   --------------------------- Language Switches ----------------------------
+
+         /Za    Disable recognition of compiler keywords near, far, huge,
+                cdecl, fortran and pascal. Defines the macro NO_EXT_KEYS.
+
+         /Zc    Makes _pascal functions be treated without regard to
+                case.
+
+         /Zd    Place line number records in the object file for use by
+                SYMDEB.
+
+         /Ze    Enable recognition of compiler keywords near, far, huge,
+                cdecl, fortran and pascal. This is the default.
+
+         /Zg    Build a function call prototype from each function
+                definition in the source file. The output is written to
+                stdout. Not supported by QuickC.
+
+         /Zi    Generate debugging information in the object file for
+                CodeView.
+
+         /Zl    Suppresses the selection of the default libraries.
+
+         /Zp    Align structures on 1, 2, or 4 byte boundaries. For
+                FullC, syntax is actually /ZP[n]; QuickC does not support
+                [n].
+
+         /Zq    Enable debug interrupts (QuickC only).
+
+         /Zr    Enable pointer checking (QuickC only).
+
+         /Zs    Perform a syntax check only; do not generate object code.
+
+   --------------------------- Linker Switches ------------------------------
+
+      /Li[n]    Invokes incremental linker ILINK, which runs faster than
+                than LINK; n specifies byte boundary to which the linker
+                is supposed to pad all near functions.
+
+         /Lr    Forces linker to produce a real-mode executable file.
+
+ /NOIGNORECASE  Treats the casing of external names as significant.
+
+    /STACK:n    Set the run-time stack size size to n bytes. (The run-
+                time stack is used heavily by auto variables.)  EXEMOD
+                can also be used to change a program's stack size.
+
+   --------------------------- Assembler Switches --------------------------
+
+ /Fa[assembly-list-file]
+                Specify the name of the assembly listing file. The file
+                type defaults to .ASM. Not supported by QuickC. Note that
+                MASM 5.10 or later is required to process output from
+                this option.
+
+ /MAmasm_option Pass indicated option on to MASM.
+
+     /Fx[file]  Specify name for MASM cross reference file.
+
+   --------------------------- Source Listing Switches ---------------------
+
+        /Sln    Set line width. Not supported by QuickC.
+
+        /Spn    Set page length. Not supported by QuickC.
+
+   /St"text"    Set title string. Not supported by QuickC.
+
+   /Ss"text"    Set subtitle string. Not supported by QuickC.
+
+   ---------------------- Naming Modules & Segments Switches ----------------
+
+         /NM    Module name.
+
+         /NT    Text segment name.
+
+         /ND    Data segment name.
+
+   ----------------------- Customized Memory Model Switches -----------------
+
+ Code Pointers
+
+         /As    Compiler to generate near code pointers.
+
+         /Az    Compiler to generate far code pointers.
+
+ Data Pointers
+
+         /An    Compiler to generate near data pointers.
+
+         /Af    Compiler to generate far data pointers.
+
+         /Ah    Compiler to generate huge data pointers.
+
+ Setting up segments
+
+         /Ad    Sets SS=DS.
+
+         /Av    Sets SS!=DS; DS reloaded on function entry.
+
+         /Aw    Sets SS!=DS; DS not reloaded on function entry.  This
+                facility is useful for programs which interface with the
+                MS-Windows environment.
+
+   ------------------------ Miscellaneous Switches --------------------------
+
+          /c    Compile only--do not invoke MS-LINK.
+
+ /F[hexvalue]   Set size of program stack. (Linker control.)
+
+       /Help    Calls the QuickHelp utility.
+
+         /Hn    Set length of significance of external names to n. The
+                default is 31 characters. Not supported by QuickC.
+
+          /J    Set the default char type to be unsigned. The default is
+                signed. Not supported by QuickC.
+
+       /link    Invoke linker.
+
+         /Lp    Compile, using libraries to support OS/2.
+
+         /Ln    Compile, using libraries to support DOS REAL mode.
+
+         /Lc    Synonym for /Lr.
+
+     /nologo    Suppress printout of the logo banner.
+
+         /Qc    Use the QuickC compiler for remaining source files.
+
+         /Tc    Compile source file whose extension is not ".c".
+
+    /V"text"    Imbed the text string in the object file. Not supported
+                by QuickC.
+
+         /Wn    Set the warning level to n (warnings indicate potential
+                problems, rather than actual errors):
+
+                 n =          Warn About
+
+                  0      Nothing (suppress all warnings)
+                  1      Unsafe conversions and overt type mismatches
+                  2      Automatic data conversions and missing returns
+                         in functions
+                  3      Use of non-ANSI features, use of extended keywords,
+                         function calls prior to function protypes.
+
+                The default is level 1.
+
+          /w    A shorthand method of specifying /W0.

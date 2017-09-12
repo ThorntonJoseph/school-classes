@@ -1,0 +1,173 @@
+TITLE MASM main						(main.asm)
+
+
+INCLUDE Irvine32.inc		;this library incorporates the above 3 lines that is why they are commented out
+	.data
+
+number1 BYTE ?
+number2 BYTE ?
+result  BYTE ?	
+twodig  WORD ?
+
+Pnumber1 BYTE "Enter Number1 0-9 >",0
+Pnumber2 BYTE "Enter Number2 0-9 >",0
+Pnumber3 BYTE "Addition Result",0
+CALLBYVALUEmsg BYTE "Call by value subroutine ",0
+INVOKEBYVALUEmsg BYTE "Invoke by value subroutine ",0
+INVOKEBYREFmsg BYTE "Invoke by reference subroutine ",0
+	.stack 200
+	.code
+PART1 PROC
+	push bp
+	mov bp,sp
+	push ax
+	push bx
+	push dx
+	mov dl,10
+	mov ah,0
+	mov al,[ebp+8]
+	mov bl,[ebp+6]
+	add al,bl
+	div dl 
+	cmp al,0
+	je DisplayresL
+	jmp DisplayresH
+	
+	
+DisplayresL:
+	mov al,ah
+	add al,30h
+	mov edx, OFFSET CALLBYVALUEmsg
+	call writestring
+	call writechar
+	call crlf
+	jmp finish
+	
+DisplayresH:
+	add al,30h
+	mov edx, OFFSET CALLBYVALUEmsg
+	call writestring
+	call writechar
+	mov al,ah
+	add al,30h
+	call writechar
+	call crlf
+	jmp finish
+	
+finish:
+	pop dx
+	pop bx
+	pop ax
+	pop bp
+	ret
+	
+PART1 ENDP
+
+ADD2byvalue PROC NEAR C USES eax edx esi edi ebp,value1:byte,value2:byte
+
+	push ax
+	push bx
+	mov ah,0
+	mov dl,10
+	mov al,value1
+	mov bl,value2
+	add al,bl
+	div dl
+	cmp al,0
+	je DisplayresL
+	jmp DisplayresH
+ 
+DisplayresL:
+	mov al,ah
+	add al,30h
+	mov edx, OFFSET INVOKEBYVALUEmsg
+	call writestring
+	call writechar
+	call crlf
+	jmp finish
+	
+DisplayresH:
+	add al,30h
+	mov edx, OFFSET INVOKEBYVALUEmsg
+	call writestring
+	call writechar
+	mov al,ah
+	add al,30h
+	call writechar
+	call crlf
+	jmp finish
+	
+finish:
+	pop bx
+	pop ax
+	ret
+
+ADD2byvalue ENDP
+
+ADD2byref PROC NEAR C USES eax ebx ecx edx esi edi ebp,value1:ptr byte,value2:ptr byte,twodigits:ptr word
+	xor ax,ax
+	mov edi,value1
+	mov al,[edi]
+	mov edi,value2
+	mov bl,[edi]
+	mov dl,10
+	add al,bl
+	div dl 
+	mov [twodigits],eax
+	ret
+
+	ADD2byref ENDP
+
+	
+MAIN    PROC
+	mov edx, OFFSET  Pnumber1 	;load location of buffer
+	call writestring		;send message to monitor
+
+;read number 1 input from command line
+
+	call readchar			;read typed value store in AL register 
+	call writechar			;echo it to monitor
+	sub al,30h			;convert ascii to hex
+	mov number1, al			;store al
+	call crlf			;go to next line
+
+	mov edx, OFFSET  Pnumber2 	;load location of buffer
+	call writestring	
+;read number 2 input from command line
+
+	call readchar			;read typed value store in AL register 
+	call writechar			;echo it to monitor
+	sub al,30h			;convert ascii to hex
+	mov number2, al			;store al
+	call crlf			;go to next line
+	mov bl,number2
+	push bx
+	push ax
+	call PART1
+	INVOKE ADD2byvalue,number1,number2
+	INVOKE ADD2byref,OFFSET number1,OFFSET number2,OFFSET twodig
+	
+DisplayresL:
+	mov al,ah
+	add al,30h
+	mov edx, OFFSET INVOKEBYVALUEmsg
+	call writestring
+	call writechar
+	call crlf
+	jmp finish
+	
+DisplayresH:
+	add al,30h
+	mov edx, OFFSET INVOKEBYVALUEmsg
+	call writestring
+	call writechar
+	mov al,ah
+	add al,30h
+	call writechar
+	call crlf
+	jmp finish
+jmp main
+	
+exit
+MAIN    ENDP
+ END main

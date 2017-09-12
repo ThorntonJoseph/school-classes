@@ -1,0 +1,1704 @@
+
+XPCMOUSE.DOC
+
+           documentation for xPC-Mouse Version 1.4: 5-Sept-1998
+            Position Cursor, Copy and Paste in Dos Text Mode
+
+     Copyright (c) 1994-1997 by Jrgen G. Weber and Grant B. Gustafson.
+                          ALL RIGHTS RESERVED
+
+NO COST?
+   This software is provided free of charge to individuals and educational
+   institutions. Money is not requested.
+   Free for personal use under the Gnu Public License agreement, which
+   is distributed with this source.
+
+POSTCARDS?
+   Postcards and comments are welcome!
+
+   Jrgen G. Weber               GB Gustafson
+   Wiesentalstraáe 1             113 JWB Math Dept Univ Utah
+   D-74523 Schw„bisch Hall       Salt Lake City, UT 84112
+   Germany - European Union      USA
+
+Cited product names are trade names.
+
+========================== GNU PUBLIC LICENSE ==========================
+
+   This software is released as copyrighted material under the GNU
+   PUBLIC LICENSE:
+                              NO WARRANTY
+   Because xPC-Mouse is licensed free of charge, absolutely no warranty
+   is provided, to the extent permitted by applicable state law.  Except
+   when otherwise stated in writing, Jrgen G. Weber and Grant B.
+   Gustafson provides xPC-Mouse "as is" without warranty of any kind,
+   either expressed or implied, including, but not limited to, the
+   implied warranties of merchantability and fitness for a particular
+   purpose. The entire risk as to the quality and performance of the
+   program is with you. Should the xPC-Mouse program prove defective,
+   you assume the cost of all necessary servicing, repair or correction.
+
+   In no event unless required by applicable law will Grant B. Gustafson
+   and Jrgen G. Weber and/or any other party who may modify and
+   redistribute xPC-Mouse be liable to you for damages, including any
+   lost profits, lost monies, or other special, incidental or
+   consequential damages arising out of the use or inability to use
+   (including but not limited to loss of data or data being rendered
+   inaccurate or losses sustained by third parties or a failure of the
+   program to operate with programs not distributed by Grant B.
+   Gustafson and Jrgen G. Weber) the program, even if you have been
+   advised of the possibility of such damages, or for any claim by any
+   other party.
+
+
+============================= INTRODUCTION =============================
+
+FUNCTION. The TSR program xPCmouse enables Cursor positioning, Copy and
+ Paste in the text modes of PC video cards for DOS programs. Xterm and
+ Win95 selection methods are used: word select on double-click, drag
+ select, rectangle select. Cursor positioning is supported by three
+ methods.
+
+INTERACTION. Programs that use the mouse themselves work as usual and
+ ignore the presence of xPC-Mouse. It works in DOS, Windows 3.1 and
+ Windows 95.
+
+WINDOWS. Clipboard support is implemented. In this version the xPCmouse
+ paste buffer can be transferred to the windows clipboard. The reverse
+ works from windows itself (transfer clipboard to keyboard input of the
+ DOS box). See WINDOWS below for details.
+
+KERMIT. A useful installation of xPC-Mouse is on a 386SX machine or
+ better running MS-kermit 3.xxx over a 14400/28800 baud modem to a
+ remote Unix host. Most of the very useful mouse functions familiar to
+ Xterm users will be available, especially double-click and paste for
+ Unix file names, cursor positioning on the command line, in text
+ editors (emacs, ce, jed, joe, jove, vi, pi) and copy/paste of local
+ text and remote host text.
+
+PC USAGE. Local use on a PC includes the familiar text capture off the
+ screen, paste into a text editor, and copy of file names to be pasted
+ on to the command line. The mouse functions are nearly identical to
+ those in Xwindow's terminal window Xterm. In Win 3.1 and Win 95 the
+ features of xPC-Mouse add Xterm selection, double-click on file names,
+ email addresses and net URLs, cursor positioning and append of paste
+ text onto a TMP file. The xPC-Mouse paste buffer can be copied to the
+ windows clipboard.
+
+SUNPC EMULATOR. This driver can be installed on SUNPC emulators 3.1 and
+ later with complete success. It is the only known driver that can add
+ local DOS window copy/paste mouse functions to SUNPC windows. Tested on
+ SUN4 machines only.
+
+LINUX DOSEMU EMULATOR. This driver can be installed as a replacement for
+ the Linux programs "gpm" and "selection" under the DOS emulator called
+ "DOSEMU", versions 0.60.4 and later (August 1995) for the Linux
+ operating system (386/486 Unix). Not tested on earlier DOSEMU versions.
+ Adds cursor positioning to some DOS applications running under DOSEMU.
+
+TEXT EDITORS. Most PC text editors can use xPC-Mouse to position the
+ cursor and copy/paste small selections of text. This is especially
+ useful in special-purpose editors, like the TeX User's group editor
+ called CSED, which uses the Latin II character set. The xPC-Mouse TSR
+ works with this editor in text mode. Similar statements apply to
+ epsilon, emacs, ce, qedit, jed, joe, pi, and vi clones. The Xterm mode
+ can be used with extensible editors to produce a seamless interface to
+ the editor's own copy / cut / paste / position functions.
+
+
+============================ HARDWARE NEEDED ===========================
+
+HARDWARE
+
+  80286, 80386, 80486, 80586, Pentium CPU.
+  Microsoft compatible mouse with 2 buttons or
+  Mouse Systems compatible mouse with 3 buttons
+
+  Note: The program can be recompiled to work on an 8088 CPU.
+        See the ASM source.
+
+============================ SOFTWARE NEEDED ===========================
+
+SOFTWARE
+
+  New mouse device driver MOUSE.SYS or MOUSE.COM. See below for suggestions.
+      Normally loaded from the file CONFIG.SYS. See below.
+      Mouse driver software is normally provided with mouse hardware.
+  MS-DOS compatible operating system
+      Tested with MS-DOS 5.0, SoftPC on a SUN4, OS/2 2.x Dos Emulation.
+      Tested with DOS 6.2x, DOS 7.0 and WIN 3.1.
+      Tested with WIN 95 (limited trial, see installation notes).
+
+CONFIG.SYS and AUTOEXEC.BAT
+
+  There must be a line DEVICE=MOUSE.SYS in CONFIG.sys or else a line in
+  AUTOEXEC.BAT for the mouse manufacturer's device driver (usually
+  called MOUSE.EXE or MOUSE.COM).
+
+  Detect the manufacturer's mouse driver at the DOS level using the
+  command "mem /d | more". Search for the keyword MOUSE and memory usage
+  of about 15000 bytes.
+
+  With Win 95 the mouse is loaded automatically and you may not change
+  it! There are options for DOS and Win 3.1. See below.
+
+
+ERROR MESSAGES
+
+xPC-Mouse complains if you lack anything essential. The error messages
+are explained below in a separate section.
+
+
+=============================== PACKAGE ================================
+
+The package consists of:
+
+  XPCMOUSE  DOC   : the file you are reading
+  XPCMOUSE  ASM   : Source code for TASM/TLINK (Borland International)
+  XPCmouse  EXE   : xPC-Mouse executable for DOS (a TSR program)
+  XPCarrow  EXE   : xPC-Mouse for DOS /w arrow keys only.
+  XPCpaste  EXE   : xPC-Mouse for DOS /w paste functions only.
+  Whats     NEW   : List of new features in this release.
+
+============================HOW TO USE xPC-Mouse==========================
+
+Typical command lines:
+
+    XPCMOUSE /a2              Use matrix method for cursor
+                              positioning (default is /A1)
+
+    lh XPCMOUSE /x78 /a2 /q   Use matrix method and change
+                              highlight to RED. Load high.
+                              Issue no signon messages.
+
+    XPCMOUSE /H               Display key and button assignments
+
+If xPC-Mouse is not installed and ? appears on the command line, then it
+aborts installation and prints the help screen:
+
+Options: /Q    : Quiet, no messages
+         /R    : Re-activate xPC-Mouse
+         /Sabc : Swap buttons 123 to order abc
+         /N0   : Defeat mouse handler re-install
+         /N1   : Re-install mouse handler before exec
+         /N2   : Re-install after exit (default)
+         /N3   : Re-install before exec and after exit
+         /K    : Defeat arrow key emulation
+         /A1   : Emacs/vi arrow key method (default)
+         /A2   : Matrix arrow key method
+         /A3   : Xterm escape sequence method
+         /M    : Monochrome video mode (equals /X119)
+         /Xddd : Highlight XOR mask ddd (default /X80)
+         /Bdddd: Buffer size dddd bytes
+         /P    : Defeat pastebuffer use
+         /D=X  : Set Xterm character classes from file X
+         /F=X  : Append active paste buffer to file X
+         /F:X  : Change TMP name c:\tmp\xpcm####.tmp to X
+Info:    /C    : Show copyright information
+         /D    : Show Xterm character classes
+         /?    : Show command switches
+         /H    : Show key and button assignments
+         /U    : Uninstall
+
+If xPC-Mouse was already installed, or this is the first install, then
+the appropriate message is displayed, for example, a first install:
+
+xPC-Mouse, version 1.4: 5-Sept-1998
+Copyright (c) 1994-1998 Jrgen G. Weber and G.B. Gustafson
+Free for personal use under the Gnu license agreement.
+
+KEYS and BUTTONS         FUNCTION
+Drag Mouse 1 ........... Copy text
+Double-click Mouse 1 ... Copy word
+Mouse 2 ................ Paste text
+CTRL-Mouse 2 ........... Paste text + ENTER
+RSHIFT-Mouse 2 ......... Paste feature on/off
+LSHIFT-CTRL-Mouse 2 .... Append text to TMP file
+LSHIFT-ALT-Mouse 2 ..... Paste into Windows clipboard
+Mouse 1 ... ............ Position cursor (hold 1/6 sec)
+Mouse 3 ................ Carriage return (except /A3)
+ALT-Mouse 2 ............ Mouse 3 duplicate
+LSHIFT-Mouse 1 ......... Cursor feature on/off
+LSHIFT-ALT-Mouse 1 ..... Toggle methods /A1-/A3
+CTRL-LSHIFT-RSHIFT ..... Re-install (hold 1 sec)
+
+xPC-Mouse is installed. Use "xPCmouse /U" to un-install.
+
+If you do not use the mouse you will see no sign of xPC-Mouse being
+present. When you move the mouse, the mouse cursor appears. It gets
+hidden again as soon as the next character is displayed on screen.
+
+xPCmouse won't show up in a color program running on a mono screen or on
+a color screen that has the wrong video mode. The DOS commands MODE CO80
+and MODE MONO can change the video mode; xpcmouse /M sets mono mode
+manually. See also the /X switch for setting cursor colors.
+
+
+==================== COMMAND SWITCHES AFTER INSTALL ====================
+
+After xPCmouse has been installed, some of the command line options can
+be used. They are:
+
+         /U    : Uninstall
+         /R    : Re-activate xPC-Mouse
+         /N0   : Defeat mouse handler re-install
+         /N1   : Re-install mouse handler before exec
+         /N2   : Re-install after exit (default)
+         /N3   : Re-install before exec and after exit
+         /D=X  : Set Xterm character classes from file X
+         /F=X  : Append active paste buffer to file X
+         /F:X  : Change TMP name c:\tmp\xpcm####.tmp to X
+
+The more frequently used options /K, /A1, /A2, /A3, /P have hot button
+assignments, so command line options are not used after install. The
+others can't be changed after install, namely /S, /M, /X. The
+information commands are always available regardless of the installation
+status:
+
+Info:    /C    : Show copyright information
+         /D    : Show Xterm character classes
+         /?    : Show command switches
+         /H    : Show key and button assignments
+
+
+=========================== COMPILER EXAMPLE ===========================
+
+Example. Use xPC-Mouse to drag compiler error messages into an editor.
+
+  The compiler is run as an editor shell. The messages appear on the
+  screen, but are lost as soon as the editor is re-entered:
+
+  Assembling file:   TEST.ASM
+  **Error** TEST.ASM(165) Undefined symbol: MAINEXIT
+  **Error** TEST.ASM(190) Undefined symbol: EXITLOOP1
+  Error messages:    2
+  Warning messages:  None
+  Remaining memory:  470k
+
+  Solution: Copy the text needed into the paste buffer using the mouse.
+            Pop back into the text editor and paste the copied text into
+            a scratch buffer or as comments at the top of the current
+            source file. The messages can be analyzed from the
+            reference.
+
+========================== DIRECTORY EXAMPLE ===========================
+
+Example. Use xPC-Mouse to copy a directory listing into an editor.
+
+  Most editors allow a shell to DOS to do a directory, but offer no
+  features for pasting the information back into the file being
+  edited. With xPC-Mouse, copy the desired text to the paste buffer and
+  re-enter the editor. Then paste with the mouse.
+
+
+=========================== INTERNET EXAMPLE ===========================
+
+Example. Use xPC-Mouse to cut and paste URL addresses.
+
+  Internet browsers like Lynx and Netscape have the advantage of rapid
+  access to information. News readers and Email programs often supply
+  essential information like URL addresses (Universal Resource Locator):
+  http://www.yahoo.com/. With Windows cut/paste and DOS xPC-Mouse, the
+  addresses can be copied and pasted into a file, where they won't get
+  lost.
+
+
+========================= COMMAND LINE EXAMPLE =========================
+
+Example. Use xPC-Mouse to copy and paste file names onto the command
+         line.
+
+  Many command lines take several file names, usually already on the
+  screen due to a directory listing.  GNU software like "ls" is useful
+  for displaying the filenames in a compact and directly usable format.
+
+  The method used with xPC-Mouse is to DOUBLE-CLICK on a file name. That
+  places the file name in the paste buffer. Then press the right mouse
+  button to paste onto the command line.
+
+
+======================== APPEND FILE EXAMPLE 1 =========================
+
+Example. Use xPC-Mouse to append URL addresses and WEB text onto a
+         collection file b:\sites.txt.
+
+Run xPCmouse once from the command line to define the TMP file name to
+be b:\sites.txt, as follows:
+
+                        xpcmouse /f:b:\sites.txt
+
+To append the paste buffer onto the end of the file b:\sites.txt,
+highlight the area first, then hold down the Left Shift and Ctrl keys,
+while pressing Mouse 2 (Right Mouse button on a 2-button mouse).
+
+If the disk is not in the drive, then problems can occur. There can also
+be problems trying to write a file to a CD. Such things can be an
+accident, like defining the TMP file as /f:xpcm#.tmp. The problem with
+this definition is that it takes the default drive. In the case of a CD
+you'll hear a BEEP because xpcmouse can't write the file.
+
+
+======================== APPEND FILE EXAMPLE 2 =========================
+
+Example. Use xPC-Mouse to append pieces of a diff session onto a
+         collection file c:\tc\diffs.txt.
+
+A typical application of "diff" seeks to find the error in the last of
+several edits of prog1.c, in the newly edited source prog2.c. After lots
+of edits, this can be a real challenge.
+
+A typical "diff" command line is
+
+                     diff -c prog1.c prog2.c | less
+
+where prog1.c and prog2.c are the different versions of the same
+program. The program "less" scrolls the text forward and backward,
+unlike the standard "more" which scrolls forward only.
+
+Run xPCmouse once from the command line to define the TMP file name to
+be c:\tc\diffs.txt, as follows:
+
+                        xpcmouse /f:c:\tc\diffs.txt
+
+The method used examines the output, selecting pieces with the mouse.
+The paste buffer is appended onto the end of the file c:\tc\diffs.txt by
+holding down the Ctrl and Left Shift keys, while pressing Mouse 2 (Right
+Mouse button on a 2-button mouse).
+
+The selection and append operations are repeated until enough pieces are
+gathered to identify the error.
+
+
+======================== APPEND FILE EXAMPLE 3 =========================
+
+Example. Use xPC-Mouse to append URL addresses and WEB text onto a
+         collection file b:\sites.txt.
+
+ This example requires an application that can launch a program and
+ return. The example used here is kermit.
+
+ Columbia's modem program "kermit" is capable of making a remote
+ connection, running lynx (a text-based WWW browser) at the remote site
+ and browsing internet pages. Kermit can define a keyboard macro which
+ runs a script written in kermit's command language, and this feature
+ completely automates the collection of text.
+
+ The advantage of this method is the selective appending of text to a
+ particular file. Several files and key definitions are possible.
+
+ From kermit's documentation:
+
+   {\Kxxxx}      Execute macro named xxxx (xxxx can be any name)
+   Example: "SET KEY \315 {\Kapf}" puts macro apf on the F1 key.
+
+ Following the documentation, we issue these commands to kermit. To
+ completely automate it we can place the commands in the file
+ kermit.ini:
+
+    DEFINE apf run xpcmouse /q /f=b:\sites.txt, connect
+    set key \315 {\Kapf}
+
+ During the kermit session, the mouse is used to double-click and
+ highlight text. When the text is to be saved in "sites.txt", then key
+ F1 is pressed. Each keypress saves the active pastebuffer in xPCmouse
+ onto the end of the file "b:\sites.txt".
+
+=========================== MOUSE OPERATIONS ===========================
+
+    HIGHLIGHT text by dragging the left button.
+
+To select a text area move the mouse cursor to the beginning of the
+area. Depress and hold button 1 while dragging the mouse over the area
+you want to select. When you release button 1, the selected text is
+copied to xPC-Mouse's internal buffer. The internal buffer is
+overwritten on each use.
+
+  Initial press of Mouse 1 starts a definition and mouse release ends
+    it. The highlighted area is determined by the movement of the mouse
+    cursor (the drag point). Drags from the initial point to the HOME
+    position on the screen define a rectangular area (matrix). All other
+    drag directions produce the default Xterm highlight.
+
+  Xterm drags of the mouse highlight the text as in older versions 1.0
+    and 1.1 of xPCmouse. It works on one line by dragging in either
+    direction. On multiple lines, all characters between the initial
+    press and the drag point are highlighted. Lines between the initial
+    line and the drag point line are completely highlighted. Mouse
+    release copies the region into the paste buffer.
+
+  Matrix drags create a rectangular highlighted area. The method for
+    highlighting a box is to press the mouse on the LOWER RIGHT corner
+    of the box, then drag the mouse toward the screen's HOME position
+    (upper left corner). Mouse release copies the box into the paste
+    buffer.
+
+  Blanks on the end of a line are removed. So are unprintable
+    characters, those with ASCII codes less than 32. The last line
+    highlighted is not stripped of ending blanks. All ASCII codes 32
+    through 255 are copied to the paste buffer.
+
+
+    DOUBLE-CLICK on the left button highlights one word.
+
+If the mouse cursor is on a word, then it can be selected by double
+clicking button 1 (the left button). A word is a sequence of letters,
+digits, the underline character and European special letters (IBM ASCII
+values 80h to 0a5h, 0e0h to 0ebh). This TSR has been coded to accept
+most Unix file names, email addresses and URLs. There is a command line
+option to change this default behavior.
+
+
+    PASTE the highlighted text by clicking the right button.
+
+Press the right mouse button to simulate the content of the buffer being
+typed at the keyboard. If you keep the CONTROL key pressed while
+pressing the right button, an additional pressing of ENTER is simulated.
+If you forget the CONTROL, then add ALT-BUTTON2 to inject the missing
+carriage return (good for adding blank lines, too).
+
+
+    PASTE the highlighted text to the TMP file.
+    Hold down CTRL-LSHIFT and then click the right button.
+
+The text is appended to the TMP file, set by default to the name
+c:\tmp\xpcm####.tmp. If the file cannot be created, then a BELL sounds.
+Otherwise the text is appended to the file plus a carriage return and
+linefeed at the end. Change the default name with command line option
+/f:X where X is the new name (20 char max).
+
+    PASTE the highlighted text to the windows clipboard.
+    Hold down ALT-LSHIFT and then click the right button.
+
+The text replaces the current clipboard, all previous text in the
+clipboard is lost. If windows is not running, or another windows
+application controls the clipboard, then a BELL sounds. Otherwise the
+transfer is probably successful. The transfer is made even in the case
+where it is incomplete.
+
+
+    CARRIAGE RETURN is emitted by clicking the middle button.
+
+Press ALT-Button 2 or the middle mouse button to simulate a carriage
+return being typed at the keyboard.
+
+
+    SET CURSOR by pressing the left button 1/6 second.
+
+If you press and release the left button without selecting an area the
+cursor is positioned to that location, by stuffing the keyboard buffer
+with appropriate arrow keys. However, the press must be 1/6 second or
+longer before release, or nothing happens. This is how double-click is
+distinguished from just a left button press intended to position the
+cursor.
+
+
+    TOGGLE the set cursor feature by pressing LSHIFT left button
+
+The set cursor function can sometimes send unwanted characters to a
+program. Hold down the SHIFT and press the left button, then release
+both, to toggle the feature on/off. Copy and paste will work with the
+set cursor function defeated. To disable cursor features at startup, use
+the /K option on the command line (see below).
+
+
+    TOGGLE the paste feature by pressing RSHIFT right button
+
+The paste function can sometimes send unwanted characters to a program.
+Hold down the RSHIFT and click the right button, to toggle the feature
+on/off. Cursor positioning functions will still work with the copy/paste
+functions defeated. To disable the copy/paste at startup, use the /P
+option on the command line (see below).
+
+
+    TOGGLE the /A1-/A3 options by pressing LSHIFT-ALT left button
+
+These methods can be selected at startup (/A1 is the default). Some
+remote applications may not use the method effectively, e.g., menu
+systems such as found in GOPHER on the internet will not respond
+properly to /A1 or /A3. The options are toggled one at a time in the
+order
+                      /A1 --> /A2 --> /A3 --> /A1
+
+The methods /A1-/A3 can be disabled by the /K option on startup or
+changed dynamically by pressing LSHIFT button 1.
+
+
+    Transmit Button 3 by pressing ALT button 2
+
+Some remote applications may need a third mouse button press. Even if
+you only have a 2-button mouse, this is possible. The third button on a
+3-button mouse (usually the middle button) does the same thing as ALT
+button 2.
+
+    Re-install the mouse handler
+
+The HOT BUTTON combination which does a re-install on the fly is
+
+            Right Shift  (1/10 second), then
+            Ctrl + Left Shift + Right Shift  (for 1 second).
+
+The right shift key initiates a timer, so when you press it for 1/10 of
+a second, then the timer is reset to zero. The method is to touch RSHIFT
+and release. Then hold down CTRL and LSHIFT, reach across the keyboard
+and press RSHIFT for 1 second. It works if the mouse cursor comes alive.
+
+
+DE-SELECTION. The selected area is de-selected as soon as you press the
+left key again or if anything is displayed on the screen. This is done
+because the programs you run don't know anything about the selection.
+The de-selecting is done to prevent chaos on the screen. Optical harm
+may be caused by xPC-Mouse running together with programs that use page
+swaps to achieve fast refresh. It's not dangerous.
+
+MOUSE SUPPORT. If a program offers mouse support itself the mouse
+functions of xPC-Mouse lay dormant until the program ends. Clearly not
+both can run at the same time, so xPC-Mouse is put in the background by
+such programs. After the program exits, xPC-Mouse comes alive again. If
+it does not come alive, "xpcmouse /r" should restart it. If that fails,
+then "xpcmouse /u" will unload the program so you can load a fresh copy.
+Check out the mouse driver recommendations before you decide that it is
+the fault of an application or xPC-Mouse. Some video problems can also
+lead to a vanishing mouse cursor. For example, WP 6.0 can exit with a
+video mode that hides the mouse cursor (fixed by "mode co80").
+
+
+=========================== COMMAND LINE OPTIONS ==========================
+
+         /U    : Un-install xPC-Mouse
+               Removes mouse driver from memory and resets all affected
+               interrupt vectors. Finally, it resets the manufacturers
+               mouse driver.
+
+         /Q    : Quiet: no messages
+               All messages omitted on startup.
+
+         /R    : Re-activate xPC-Mouse
+               Some programs reset the manufacturers mouse driver and
+               un-vector previous mouse programs, but exit back to DOS
+               in an unusual way, undetected by xPC-Mouse. So this
+               manual reset of xPC-Mouse exists. This reset will be
+               required after exit from programs that grab the mouse, if
+               you issue the /N0 or /N1 switch. These switches de-activate
+               a mouse handler re-install on exit (/N2 switch).
+
+               The HOT KEY combination which does /R on the fly is
+
+                  Right Shift (1/10 second), then
+                  Ctrl + Left Shift + Right Shift (for 1 second).
+
+         /Sabc : Swap buttons 123 to order abc
+               Two and three button mouse hardware can be configured for
+               left or right hand use and compliance with Unix standards
+               for labeling of buttons. To swap the left and right
+               buttons on a 2-button mouse, use /S213. To make a
+               3-button mouse behave like it does in Unix Xterm, use
+               /S132 (right-handed mouse) or /S231 (left-handed mouse).
+
+               Three-button hardware must be supported by a mouse device
+               driver that can use Mouse Systems Corporation mode (MSC
+               mode in the literature; MS is Microsoft mode). Secondly,
+               the 3-button hardware must be installed as such (the
+               default seems to be MS mode!). See the notes above on
+               installation.
+
+         /Xddd : XOR screen mask ddd (default /X80)
+               The highlight of a screen area is indicated by XORing the
+               attribute bytes with ddd=80, to de-select they are simply
+               XORed again. Normally the XOR mask is 80. A useful one
+               for monochrome is /X119. With /X0 you get no visible
+               selection. Some people like /X78 the best.
+
+         /Bdddd: Buffer size ddd bytes
+               The buffer size can be set to any size less than the
+               pre-compiled size. The syntax "xPCmouse /B1536" sets the
+               buffer size to 1536 bytes. To use the default
+               size, 2048 bytes, no command line option is required. A
+               common setting is "xPCmouse /B0 /P" which reduces the
+               paste buffer size to 0 and defeats all pasting
+               operations. Memory use is reduced by 2k. The maximum buffer
+               size is 4096 (recompile the ASM source if you wish).
+
+         /M    : Monochrome video mode
+               Same as /X119. Works on Hercules mono cards.
+
+         /N0   : Defeat mouse handler re-install
+         /N1   : Re-install mouse handler before exec
+         /N2   : Re-install mouse handler after exit (default)
+         /N3   : Re-install before exec and after exit
+               The int 21h features might interfere with certain software.
+               For example, multiple DOS windows in Win 3.1 can compete
+               for the mouse handler (but this may not bother you).
+
+               If you use /N0 or /N1, then a re-run of xpcmouse with the
+               /R command line switch may be required to re-install the
+               mouse handler. The hot button sequence CTRL-LSHIFT-RSHIFT
+               for one second will have the same effect as /R. Or, run a
+               non-mouse program to jump-start xPC-Mouse.
+
+               Option /N1 schedules a reset with each program execution,
+               which is detected through function 4b00h in interrupt
+               21h. The actual reset happens on the next timer event
+               (18.2 per second). The intent of this option is to handle
+               the case of launching a non-mouse program in order to
+               have xPCmouse available in that application. If used with
+               a mouse application, it is possible that xPCmouse could
+               steal mouse control.
+
+               Option /N2 (default) schedules a reset after a normal
+               program exit (interrupt 21h functions 0 and 4c). Abnormal
+               exits, such as a jump to address zero, will escape
+               detection. The actual reset happens on the next timer
+               event (18.2 per second). The purpose of this option is to
+               reload xPCmouse on exit from a mouse application,
+               especially so that it is available for command.com.
+
+               Option /N3 schedules an auto reset before each program
+               load (interrupt 21h function 4b00), and a reset is
+               scheduled after each program exit (interrupt 21h
+               functions 0 and 4c). In either case, the actual reset
+               happens on the next timer event (18.2 per second). They
+               could happen at the same time. This option is known to be
+               trouble for windows, because the /N1 part can occur after
+               a program has loaded it's mouse handler, causing the
+               mouse features in that program to be lost. In DOS, there
+               is less opportunity for conflicts.
+
+               These flags can be reset on the fly by running xpcmouse
+               from the command line. For example, a batch file to run
+               windows could set /N2 in xpcmouse and then invoke windows
+               3.1. Windows 95 cures the ills of the /N switches by not
+               allowing xPCmouse to be pre-loaded in DOS (load it in
+               each DOS box individually).
+
+         /K    : Defeat Arrow key emulation
+               The left button pressed for 1/6 second normally produces
+               a stuffing of arrow keys to reset the text cursor to the
+               button press location. This command line option causes
+               xPC-Mouse to start up with that feature defeated. Holding
+               the LSHIFT key down and pressing the left button toggles
+               the /K state on/off.
+
+         /P    : Defeat pastebuffer use
+               Some applications will not allow pasting, since the
+               application does it already in response to Xterm
+               sequences that emulate the mouse buttons. Also used to
+               simplify logic for paste buffer size 0 (see /B0).
+
+         /A1   : Emacs/vi arrow key method (default)
+         /A2   : Matrix arrow key method
+         /A3   : Xterm escape sequence method
+               The matrix method positions the cursor by moving it by
+               columns first, then by rows. The Emacs method moves the
+               cursor first to column 0, then the matrix method is
+               applied. This prevents false positioning due to emacs
+               character-stream notions of "point". Also works in VI,
+               JOVE and JED. The Xterm method sends escape sequences
+               recognized by Xterm as simulations of the mouse. Many
+               editors already recognize the escapes, but may need
+               additional support to make full use of the information.
+               The Xterm support is the best for modem use. See the
+               technical notes below for more detail.
+
+         /D=X  : Set Xterm character classes from file X
+               The file should have one line, less than 128 chars, in
+               the format
+               35-35:45-58:64-90:92-92:95-95:97-122:126-126:128-165:224-238
+
+               For example, the section 64-90 stands for '@' plus the
+               uppercase characters 'A' to 'Z'. Space is reserved for 12
+               pairs (only the first 12 are used).
+
+               A classic use for this feature is in Lotus 123. The
+               material in a spreadsheet can be matched with the
+               double-click function for pasting text into cells.
+
+         /F=X  : Append active paste buffer to file X
+               The symbol X is replaced by a valid DOS path name,
+               e.g., syntax /F=b:\tmp\foo.txt appends the current paste
+               buffer to the file b:\tmp\foo.txt, creating the file if
+               it does not already exist. Name limit is 128 characters.
+
+         /F:X  : Change TMP file c:\tmp\xpcm####.tmp to X.
+               The symbol X is replaced by a valid DOS path name, e.g.,
+               syntax /F:b:\tmp\foo.txt changes the default name to
+               b:\tmp\foo.txt, creating the file if it does not already
+               exist. The actual pasting to the file is done with the
+               hot button combination CTRL-LSHIFT-BUTTON 2. A BELL
+               sounds if the file cannot be created. Name limit is 20
+               characters.
+
+         /C    : Display copying information
+               Prints the author addresses, email addresses and
+               copyright information for the GNU license agreement.
+
+         /D    : Show Xterm character classes.
+               Shows Xterm classes in the format
+                Xterm Classes
+                35-35:45-58:64-90:92-92:95-95:97-122:126-126:128-165:224-238
+
+               For example, the section 64-90 stands for '@' plus the
+               uppercase characters 'A' to 'Z'. See an ASCII chart.
+
+         /?    : Display help text
+               Actually, any nonsense on the command line causes help to
+               be printed as does any command line containing a question
+               mark.
+
+         /H    : Display mouse button assignments
+               This display can be obtained without loading the TSR. By
+               default, it is displayed if the driver is already
+               resident, since in this situation, mouse button
+               information is more relevant than command line switches.
+
+
+========================== MONOCHROME CARDS ===========================
+
+On monochrome systems (Hercules compatible cards) you could try option
+/X119 to produce a visible selection on screen. The special option /M is
+a synonym for /X119. If the command line has no /X or /M options, then a
+check is made for for video mode 7 (mono monitor). If found, then the
+TSR selects /M automatically.
+
+So switches /X119 or /M are useful only if the computer fools the
+software and you need a manual over-ride. This happens, for example, on
+laptop computers with mono EGA/VGA. The check for text mode 7 will not
+be successful on such hardware.
+
+
+=================== DOS and WIN 3.1 SOFTWARE NEEDED ====================
+
+MOUSE DEVICE DRIVERS for DOS and WIN 3.1
+ [see below for DOSEMU and Linux. Win 95 is also below.]
+
+ Tested and working under DOS and Win 3.1:
+   Austin 6.00 (1993) "mouse.com",
+   Genius 10.10 (1988-1992) KYE Sys "gmouse.com",
+     [http://www.coast.net/simtel/msdos/mouse/, gmou*.zip]
+
+
+ Works under DOS, but fails under MS-Windows 3.1:
+   Agiler Mouse 7.02 (1991) "mouse.com".
+   AmHi Tech [Jow Dian] 8.20 (1994-95) "mouse.com" ,
+   Microsoft 8.20a (1992) "mouse.com" (Win 3.1 Distribution disk)
+   Mouse Systems Corp 7.01 (1990) "mscmouse.com"
+   Romart (1992-93) Mitsumi 7.21 "mouse.com",
+   Znix 7.04f (1991) "mouse.com"
+
+ Does not work at all:
+   Aero 1.30 (1990) ICA tech "amouse.com",
+
+  BUTTON CONVENTIONS.
+          A 2-button mouse (Microsoft) has a Left button and a Right
+          button. A 3-button mouse (PC Mouse Systems) has a Left button,
+          Right button and Middle button. The physical layout is not
+          important, because xPC-Mouse allows the buttons to be
+          swapped. Our discussion here assumes a right-handed mouse
+          (otherwise it would be completely confusing to read) and the
+          configuration below for a Unix workstation using Xterm
+          conventions for the mouse buttons. To understand "button1" and
+          "button3", consult the ++second++ diagram, not the first!
+
+                              ÚÄÄÄÄÂÄÄÄÄ¿    ÚÄÄÄÄÂÄÄÄÄÂÄÄÄÄ¿
+           Mouse button       ³    ³    ³    ³    ³    ³    ³
+           configuration      ³ L  ³ R  ³    ³ L  ³ M  ³ R  ³
+           for the PC         ³ 1  ³ 2  ³    ³ 1  ³ 2  ³ 3  ³
+                              ÀÄÄÄÄÁÄÄÄÄÙ    ÀÄÄÄÄÁÄÄÄÄÁÄÄÄÄÙ
+                              ÚÄÄÄÄÂÄÄÄÄ¿    ÚÄÄÄÄÂÄÄÄÄÂÄÄÄÄ¿
+           Mouse button       ³    ³    ³    ³    ³    ³    ³
+           configuration      ³ L  ³ R  ³    ³ L  ³ R  ³ M  ³
+           for Unix console   ³ 1  ³ 2  ³    ³ 1  ³ 2  ³ 3  ³
+                              ÀÄÄÄÄÁÄÄÄÄÙ    ÀÄÄÄÄÁÄÄÄÄÁÄÄÄÄÙ
+          If you work at a Unix console, then consider remapping the
+          mouse keys from order 123 to 132 (3-button PC Mouse Systems
+          only). Do this via the /S command line switch in xPC-Mouse.
+          If you are left-handed, then swapping buttons is not a new
+          idea. Be aware that windows settings are unaffected.
+
+ CONFIGURATION FOR 3-BUTTON MOUSE.
+ Most of the cheap mice with 3 buttons are just fine. I bought one for
+ 9.95. It came with a diskette of software and documentation. It is
+ installed in autoexec.bat with a line like
+
+        loadhigh c:\mouse\mouse.com /c2
+
+ which specifies COM2 for the port. Everything else is configured by the
+ driver and I needed to do NOTHING. When first installed it came up as
+ "Microsoft Mouse". And it worked fine as a 2-button mouse. Following
+ the instructions with the mouse, I shut off the power, then held down
+ the left mouse button as the power was turned on. After the machine
+ booted, I released the mouse button. By then, the screen had said
+ "Mouse Systems Mouse" installed. Later, I learned the same could be
+ accomplished by pulling the mouse connector and holding down a button
+ while the connector was re-plugged.
+
+ In short, there are no mouse driver switches to set in order to get the
+ 3-button mouse to act like one. No changes are made to the device
+ driver command line.
+
+ But Microsoft windows 3.1 already had its mind made up that the mouse
+ was a "Microsoft Mouse". So I had to run win 3.1 setup. That took some
+ time. If I was clever, then I would just edit the INI file in the
+ \windows directory to effect the change. At the time, I didn't know
+ what win 3.1 had to replace to get everything to work with a different
+ kind of mouse device. On the second round, Win 3.1 had both the MS and
+ MSC drivers installed and then the swap of drivers was just a reboot of
+ windows (very fast).
+
+ The MSC setting didn't last with this cheap mouse. When I turned the
+ computer on again, the mouse came up as a Microsoft mouse. In Win 3.1,
+ this is a surprise, because the mouse is unavailable. I learned that
+ removing the mouse cable from the serial port, holding down button 1,
+ and re-installing the cable restored MSC mode in windows (10 seconds).
+ This lasted until the power was cycled. To get the DOS mouse driver
+ reset to MSC mode required a soft reboot of DOS. All this confusion
+ with MS and MSC mode finally caused me to accept MS mode and forget
+ about the 3-button mouse. The lesson: get a 3-button mouse that can be
+ hardware locked to MSC mode.
+
+===================== LINUX DOSEMU SOFTWARE NEEDED =====================
+
+ The Linux DOS emulator is "DOSEMU", versions 0.60.4 and later (August
+ 1995) for the Linux operating system (386/486 Unix). To make xPC-Mouse
+ work in this environment, a suitable mouse device driver is required.
+
+ Tested and working:
+   Genius 10.10 (1988-1992) KYE Sys "gmouse.com",
+   Agiler Mouse 7.02 (1991) "mouse.com".
+   AmHi Tech [Jow Dian] 8.20 (1994-95) "mouse.com" ,
+   Microsoft 8.20a (1992) "mouse.com" (Win 3.1 Distribution disk, MS mode only)
+
+ Tested and don't work:
+   Aero 1.30 (1990) ICA tech "amouse.com",
+   Austin 6.00 (1993) "mouse.com",
+   Romart (1992-93) Mitsumi 7.21 "mouse.com",
+   Znix 7.04f (1991) "mouse.com"
+
+ To bring up xPC-Mouse under "DOSEMU", after DOSEMU has been installed
+ under Linux, edit the file /etc/dosemu.conf (a Linux file) and change
+ the mouse setup to allow an external mouse driver (it might be that
+ dosemu is using the internal Linux mouse driver). Launch "dos" and edit
+ the file AUTOEXEC.BAT, inserting a mouse driver line and then another
+ line for xPC-Mouse. Example for COM2 and a right-handed 3-button mouse
+ with buttons swapped to match Xterm assignments:
+
+   dosemu c:\autoexec.bat:
+     :dosemu
+     PATH H:\DOS;c:\dos;c:\usr
+     LH gmouse.com 2 >nul:
+     LH xpcmouse.exe /S132 /q
+     echo "Welcome to dosemu 0.60 Edit 4.5 (/var/lib/dosemu/hdimage)!"
+
+
+ A dosemu tip: Set up the console in /etc/dosemu.conf to reflect the
+ actual hardware (VGA, mono, etc). Use a RAW keyboard. Suspect this
+ setup error if the mouse cursor does not appear.
+
+
+ XDOS INTERFACE. Under Linux running Xfree86 (X-windows), an ansi Xterm
+ window is suitable for running DOSEMU. In that window, DOS applications
+ can be launched.
+
+ A special interface known as XDOS is available for creating a suitable
+ Xterm window and launching DOSEMU in that window. The mouse interface
+ in this setup is known to work from the point of view of Xwindows. It
+ does not work from the point of view of a DOS program. In the case of
+ xPCmouse, the XDOS interface results in two copies for each paste
+ request. Mouse drags work in XDOS if they happen to agree with Xterm's
+ idea.
+
+====================== WINDOWS 3.1 INSTALLATION ========================
+
+  In Win 3.1, xPCmouse provides a clipboard among the various DOS
+  applications running in Windows. All the DOS windows have to share the
+  same clipboard, so it is most convenient to load xPCmouse **BEFORE**
+  starting Windows:
+
+                loadhigh xpcmouse /a2 /q
+                win
+
+  With the right mouse device driver (configured in config.sys or
+  autoexec.bat), several DOS windows (windowed or full screen) can run
+  in 386 enhanced mode, each with its own mouse interface. If the
+  application does not hook the mouse, then xPC-Mouse runs. If it does
+  hook the mouse (e.g., Microsoft EDIT), then xPC-Mouse goes idle until
+  that application exits. Applications that can use xPC-Mouse will share
+  the paste buffer, for copying text between windowed DOS programs.
+
+  For example, if you like to run kermit from Windows and want xPC-Mouse
+  to be there, then load xPC-Mouse from the DOS prompt before entering
+  kermit. Items appearing in the kermit window can be safely and
+  efficiently appended to the TMP file. The default name of the TMP file
+  is "c:\tmp\xpcm####.tmp". It can be changed on the fly from the
+  xPCmouse command line.
+
+  Direct paste of the xPCmouse highlighted text into the windows
+  clipboard is possible in Win 3.1. The clipboard is viewed with
+  c:\windows\clipbrd.exe. The transfer is not completely foolproof.
+  Errors in the transfer, such as some other windows application owning
+  the clipboard, cause the bell to sound. No bell means it worked.
+
+  To switch to full screen mode in Win 3.1 or Win 95, and back again to
+  Windowed mode, press ALT-ENTER on top of the DOS box. The Win 95
+  behavior is decidely different, but usable.
+
+  If you use DOS 6.2 and Win 3.1 in MS mouse mode, with a Win 3.1
+  video driver, then xPC-mouse is activated by moving the mouse cursor
+  into the DOS window. It is active in both windowed mode and full
+  screen mode. With MSC mouse mode, the feature sometimes vanishes.
+  Reminder: MS == Microsoft mode, MSC == Mouse Systems Corporation mode.
+
+  If you use Windows video drivers made before the release of Win 3.1,
+  then likely xPC-mouse will not be available in a Win 3.1 DOS window.
+  You can use still use it in full-screen mode (ALT-ENTER is the mode
+  toggle in Win 3.1). A free fix exists for this problem: use a Win 3.1
+  video driver or one made for the video card at a later date by the
+  manufacturer. Microsoft (http://www.microsoft.com/) has made freely
+  available an accelerated win 3.1 super VGA driver set "svga.exe" (a
+  compressed auto - extracting archive) for the Tseng, Trident and
+  standard 256-color VGA cards (1994).
+
+  Mouse button swaps in Win 3.1 affect the mouse in windows mode only,
+  not in a DOS window. If you want xPC-Mouse to match the windows order
+  of buttons, then set the command line switch /S (explained below).
+
+  There is a problem with a DOS box contending for the mouse device.
+  If one window uses xPC-Mouse and another uses its own mouse interface,
+  then exit of one of the programs will cause xPC-Mouse to reset. If
+  done in the right order, it can kill a private mouse interface. An
+  example: Run a DOS shell in one window, and Microsoft EDIT in another.
+  If you exit the DOS shell, then EDIT will lose its mouse features (but
+  pick up those of xPC-Mouse). The /N1 switch will turn this behavior
+  off, at the expense of having to issue "xpcmouse /r" (or a key
+  sequence CTRL-LSHIFT-RSHIFT) when the mouse features go away. Is the
+  default behavior /N2 more convenient? In DOS, the answer is definitely
+  YES. In windows, /N1 can work best, depending on how the applications
+  are used. If you use windows exclusively, and basically just launch
+  non-mouse DOS applications from an icon, then set /N1 on the command
+  line. If you are using xPCmouse in a COMMAND.COM shell, then option
+  /N2 is the best choice.
+
+  Application note: It is possible to restart xPCmouse when another
+    application has hooked the mouse (CTRL-LSHIFT-RSHIFT). It doesn't
+    always work. But if it does, then it's a one-way install, unless you
+    can trick that application into re-installing its mouse program.
+    (It turns out that WP 6.0 for DOS can be tricked by a shell to DOS).
+
+  WINDOWS CLIPBOARD SUPPORT. The DOS paste buffer can be transferred to
+  the windows clipboard. The reverse process, transferring the windows
+  clipboard into the DOS box keyboard input, is handled by windows
+  itself (there is no need for xpcmouse to support it).
+
+  One word of warning. The windows API replaces the current clipboard on
+  each write. The old clipboard is lost. The function won't work if
+  another program is using the clipboard.
+
+     Example: Locate some text in a DOS editor, eg, a modem
+              initialization string from modem.ini, then paste
+              the selected text directly into the windows clipboard.
+              Jump to Telnet and paste the text into a remote text
+              editor on a Unix system.
+
+  DOSCLIP. At http://www.coast.net/SimTel/ you will find in the DOS
+  section a file "dosclip*.zip" that contains the 1992 source and
+  executable for a dos TSR that provides Windows clipboard transfers
+  to and from DOS applications running in a "dos box". This is a 10k
+  DOS application with ASM sources.
+
+
+======================= WINDOWS 95 INSTALLATION ========================
+
+  Why bother to install xPCmouse in Win 95? True, Win 95 has a copy and
+  paste function built-in. What Win 95 doesn't have in it's DOS box is
+  cursor positioning, double-click on file names and Xterm highlighting.
+  The one feature I use the most in Win 95 is the append of highlighted
+  text onto a TMP file.
+
+  The basics:
+
+    1. Boot win 95.
+    2. Start a DOS box (e.g., COMMAND.COM).
+    3. Issue the command XPCMOUSE in that window.
+    4. Open PROPERTIES on the upper menu bar. Select MISC and set
+       EXCLUSIVE for the mouse. Save.
+    5. Try out xpcmouse. To escape EXCLUSIVE mode press ALT-SPACE or
+       ALT-TAB (returns the mouse to win 95).
+    6. Enter EXIT at the DOS prompt to close the DOS box and get rid of
+       xpcmouse.
+
+  Limited testing has been done with Win 95. The DOS box in win95 has
+  been much improved, allowing more setup options than in 3.1. A big
+  change in win95 is the pre-loading of mouse drivers. Microsoft demands
+  that you use the windows mouse driver, not an addon DOS driver, when
+  booting Win 95 or running DOS box applications. Unlike Win 3.1, the
+  supplied Microsoft Win 95 mouse driver works.
+
+  EXCLUSIVE mode must be used for the mouse in the DOS box. This mode is
+  set in the PROPERTIES dialog under MISC, accessed from the DOS box
+  menu bar (any of the three icons on the top right will work; I used
+  letter "A"). Win 95 remembers this setting, and in turn, you must
+  remember ALT-SPACEBAR and ALT-TAB as the methods for escaping the DOS
+  box and grabbing the mouse back for Win 95 use.
+
+                  *=================================*
+                  |     ALT-SPACEBAR and ALT-TAB    |
+                  |   Return the Mouse to Win 95!   |
+                  *=================================*
+
+  A warning about "msdos mode" in win 95. The result is maybe not what
+  you want. It takes about 8 minutes to boot into DOS in this mode and
+  then return to Win 95. It is good for about one application in a
+  thousand, and I don't know of any that require it.
+
+  To load xPCmouse in a Win 95 DOS box, issue this command at the DOS
+  prompt in that box:
+
+                        loadhigh xpcmouse /q
+
+  In general, xpcmouse has to be loaded via a batch file in Win 95,
+  instead of being loaded once and for all in autoexec.bat. Luckily,
+  every DOS box is able to read in a batch file on startup, given in the
+  PROGRAM dialog in the PROPERTIES section. If you don't use the batch
+  file approach, then manual loading of xPCmouse is required.
+
+  Other issues like TMP file name, copying to the clipboard, swapping
+  buttons and the like all work in Win 95 the same as Win 3.1.
+
+  The default /N2 switch is the best under Win 95. Programs that use the
+  mouse are given it by Win 95, and then on exit, xPCmouse again gets
+  re-installed automatically, so it is available at the command.com
+  level.
+
+  On a 1994 GateWay 2000 computer (486DX-66) running Win 95, the mouse
+  seemed lively and responsive. It had a Microsoft BUS mouse. All
+  features were active. On a 1997 Pentium 150 from OfficeMax (an
+  off-brand whatever), the mouse seemed lethargic in a DOS box, almost
+  like software task switching in Win 95 was several steps behind the
+  mouse motion. The problems are largely cosmetic. If you can ever get
+  the area highlighted, then xPCmouse has squirreled away the text in
+  its buffer.
+
+
+========================== CONFIG.SYS MENU =============================
+
+
+MAKING WIN 95 BEHAVE LIKE WIN 3.1.
+
+  Why? The default action of Win 95 out of the box is to boot directly
+  into Win 95. This behavior is of limited use because it leaves the use
+  of old software at the whim of Win 95. Lots of old software runs best
+  with a DOS boot. Since Win 95 can be started after the boot, the
+  option of DOS or Win 95 on boot is of considerable convenience.
+
+  Edit the file c:\msdos.sys, which is a text file in Win 95, and change
+  the line "BootGUI=1" to "BootGUI=0" (that's right, change the "1" to a
+  "0").
+
+  Then a cold boot will start up on a config.sys menu. There are
+  examples in the DOS help program which show how to set up a menu which
+  triggers after so many seconds to a default item on the menu. That
+  item might be DOS instead on Windows. Below is a config.sys that is
+  known to work in Win 95. You should merge your current one with this
+  one to arrive at a working copy.
+
+  The menu items below allow allow for a boot to DOS, Win 95, Linux, a
+  special DOS-extender setup for Maple, a special DOS setup for a
+  parallel LapLink cable to another DOS computer, for backup and restore
+  of software.
+
+
+  c:\config.sys
+  *--------------------------------------------------------------------*
+  | SWITCHES=/F                                                        |
+  |                                                                    |
+  | [menu]                                                             |
+  | menuitem=dos,Normal Dos: MSdos 7.0 /w Himem and Emm386 noems       |
+  | menuitem=dos1,Maple Dos: MSdos 7.0 Plain Vanilla for DOSextender   |
+  | menuitem=win,Normal Windows: Windows 95                            |
+  | menuitem=dos2,InterSrv Dos: MSdos 7.0 /w Himem and Emm386 noems    |
+  | menuitem=linux,Linux 1.2.13 on drive c: /w RedHat live CDROM       |
+  | menucolor=0,3                                                      |
+  | menudefault=dos,7                                                  |
+  |                                                                    |
+  | [dos]                                                              |
+  | DOS=HIGH                                                           |
+  | DOS=umb                                                            |
+  | DEVICEHIGH=C:\dos\HIMEM.SYS /TESTMEM:OFF                           |
+  | DEVICEHIGH=C:\dos\EMM386.EXE noems                                 |
+  | devicehigh=c:\devices\nansi.sys                                    |
+  | DEVICEHIGH=C:\MTM\MTMCDAI.SYS /D:MTMIDE01                          |
+  | SHELL=C:\DOS\COMMAND.COM C:\DOS\ /e:1024 /p                        |
+  |                                                                    |
+  | [dos1]                                                             |
+  | SHELL=C:\DOS\COMMAND.COM C:\DOS\ /e:1024 /p                        |
+  |                                                                    |
+  | [dos2]                                                             |
+  | include=dos                                                        |
+  | lastdrive=n                                                        |
+  | device=c:\dos\interlnk.exe /lpt1 /drives:5 /noscan /noprinter      |
+  |                                                                    |
+  | [win]                                                              |
+  | include=dos                                                        |
+  |                                                                    |
+  | [linux]                                                            |
+  | include=dos1                                                       |
+  |                                                                    |
+  | [common]                                                           |
+  | Files=40                                                           |
+  | lastdrive=n                                                        |
+  *--------------------------------------------------------------------*
+
+The labels [dos], [dos1], [dos2], [win], [dosemu] are stripped of their
+enclosing brackets and then become the variable %CONFIG% which is
+available to autoexec.bat, in order to trace back which menu item was
+used in config.sys. Therefore, the autoexec.bat below has several paths
+of execution, only one of which is executed, based upon the contents of
+the variable %CONFIG%.
+
+  c:\autoexec.bat
+  *--------------------------------------------------------------------*
+  | @echo off                                                          |
+  | goto %config%                                                      |
+  | :win                                                               |
+  | :dos                                                               |
+  | :dos2                                                              |
+  | PATH c:\windows;c:\dos;c:\usr                                      |
+  | LH C:\DOS\MSCDEX.EXE /D:MTMIDE01 /L:D                              |
+  | goto quit                                                          |
+  |                                                                    |
+  | :dos1                                                              |
+  | path c:\dos;c:\usr;c:\maplev\bin;c:\maplev;c:\windows              |
+  | goto quit                                                          |
+  |                                                                    |
+  | :dosemu                                                            |
+  | path h:\dos;f:\usr;f:\dos;f:\usr1;f:\usr2;f:\usr3                  |
+  | echo "welcome to dosemu 0.60!"                                     |
+  | goto quit                                                          |
+  |                                                                    |
+  | :linux                                                             |
+  | rem Boot linux from DOS directory c:\linux with live CD            |
+  | c:\linux\boot\loadlin  c:\linux\zimage cdrom=hdb root=/dev/hda1 rw |
+  | goto quit                                                          |
+  |                                                                    |
+  | :quit                                                              |
+  | prompt $p$g                                                        |
+  | c:                                                                 |
+  | if %config%==win win.com                                           |
+  *--------------------------------------------------------------------*
+
+
+=========================== TECHNICAL NOTES ============================
+
+KEYBOARD STUFFING /A1 AND /A2.
+Cursor keys are stuffed into the keyboard by options /A1 and /A2.
+Precisely, the scan codes for these keys are stuffed. Logic is applied
+to keep from over-running the keyboard buffer. There are 4 cursor key
+scan codes possible. Option /A1 tests to see if the target row is the
+same as the present text cursor row. If it isn't, then the text cursor
+is first moved to column 1. Option /A1 then moves by the MATRIX METHOD:
+move the cursor to the target row, then to the target column. Option /A2
+is /A1 with the normalization to column 1 removed; it is the matrix
+method.
+
+
+KEYBOARD STUFFING /A3.
+In option /A3, X-Windows X10 compatibility mode is assumed. However,
+no escape sequences from DECSET 9 are sent to the host. That is left
+to the host program or the user. We stuff an escape sequence on each
+button press encoding the location and the mouse button pressed. In this
+mode, we assume the keyboard buffer is emptied quickly, in order to
+simplify the logic for stuffing 6 or 12 scan codes at once. We don't
+know how this works in practice across all machines, let us know!
+
+On button press, xPC-Mouse in mode /A3 sends ESC [ M Cb Cx Cy, a total
+of six characters, 12 bytes of scan code data.  The variables are as
+follows:
+               Symbol   Coding Rules
+
+               Cb       32 == Button 1 [left button]
+                        33 == Button 2 [middle button]
+                        34 == Button 3 [right button]
+
+               Cx       32+X, X == mouse row, 1 <= X <= 25
+
+               Cy       32+Y, Y == mouse column, 1 <= Y <= 80
+
+Example: Char   Decimal  Coded Info
+
+         ESC     27      Lead-in byte1
+         [       91      Lead-in byte2
+         M       77      Lead-in byte3
+         !       33      Button 2
+         *       42      Row 10
+         U       85      Col 53
+
+On a PC with 2-button mouse, the middle button is missing, only left and
+right are present. Under SUNPC, the Unix 3-button mouse is converted
+into a two-button mouse [left,middle] and therefore button assignment is
+VERY confusing. On a Mouse Systems PC mouse, there is a middle button,
+but it better described as a 3rd button. If we find a good way to deal
+with the various button configurations, then we will update xPC-Mouse
+accordingly.
+
+Mouse DRAG holds down the left button with release in a new location.
+This results in two escape sequences, the first for button 1 at the
+location where the drag began, and the second for button 3, at the
+location of release. This sequence can be done without dragging by
+pressing button 1 and then ALT-button 2 (alias for button 3, for
+2-button mouse).
+
+The (obsolete) Xterm X10 standard for highlighting a region uses a press
+of button 1 followed by a press of button 3. During this marking stage,
+no highlight appears. Editors like Emacs make use of this method under
+X-Windows, but indeed highlight the text upon receipt of the button 3
+escape. Newer versions of emacs for Xwindows allow mouse drag and
+highlighting features.
+
+In any case, the editor must be aware of the button press simulation via
+escape sequences. For Emacs, this means that keymaps have been set up
+with specific actions, in short, someone has to write the elisp source
+to process the escape sequences. Ditto for JOVE, QEDIT, JED and similar
+extensible editors. Non-extensible editors have to be extended and
+recompiled.
+
+A way to understand /A3 is to imagine each button press resulting in the
+transmission of a string, like "HELLO," for button 1, " WORLD." for
+button 2 and " BITTER" for button 3. Then pressing button 1, button 2
+and button 3 gives "HELLO, WORLD. BITTER" whereas DRAG on button 1
+followed by button 2 gives "HELLO, BITTER WORLD.". (During testing, the
+ASM code was modified to do something similar, to allow tracing of
+escape sequences.)
+
+
+LINUX MOUSE DAEMONS.
+The analog of xPC-Mouse exists for use under Linux as programs called
+"selection" and "gpm". These Unix daemons operate in terminal mode and
+provide the same services as xPC-Mouse. The catch is that you have to be
+at the console to make them work. They don't work remotely and they
+don't work in Xwindows (in fact, they can conflict with X).
+
+PASTE BUFFER.
+The paste buffer has space for 2048 characters (2048 is the default; set
+a different value with /B). The last part is discarded if the selection
+is too large. Blanks at the end of a line are discarded. After the last
+non-blank of a line xPC-Mouse inserts a CR char to simulate pressing
+ENTER. Control characters with ASCII values below 32 are not stored in
+the buffer (they are discarded). The format of the paste buffer agrees
+with the format acceptable to Win 3.1 in its clipboard.
+
+Dynamic buffer sizing /Bdddd allows sizing of the paste buffer from 0
+bytes to 4096 bytes, where dddd is the decimal (base 10) value in bytes,
+assumed to be divisible by 16. For example, /B3070 means buffer size
+3072 bytes.
+
+To increase the maximum size of the paste buffer, change the text
+"BUFFERLEN EQU 4096" in the ASM source to a larger number like 8192 and
+recompile. The EXE file size will not change, but the load size of the
+EXE will increase. If you have "loadhigh" in the file autoexec.bat, then
+this could break the boot process, by running out of high memory during
+boot.
+
+Stuffing of the paste buffer into the keyboard buffer is done by testing
+for sufficient space prior to stuffing the character. Ditto for stuffing
+cursor keys and Xterm escapes.
+
+
+HOT BUTTON.
+XPCmouse has a button combination to re-install it in case an exiting
+program leaves the exit undetectable via interrupt 21h (like a CPM-style
+jump to address zero). The combination works through the timer
+interrupt, which happens only 18 times per second. Because of the slow
+pace, we count the number of times that the combination
+
+                    Ctrl + Left shift + Right Shift
+
+is detected, and wait for 20 times in a row. That's about 1 second. When
+this state is detected, then a re-install is scheduled.
+
+The RSHIFT key resets a timer when pressed all by itself. We suggest
+doing this for 1/10 second prior to trying the above re-install
+sequence.
+
+It is possible to use this hot button in an unusual way, eg, to kill the
+active mouse program and install xPCmouse instead. This can be done in
+commercial programs, like Word Perfect, Borland C, and Quattro Pro.
+
+Re-installation of the mouse into an active WP session can be done
+by a shell to DOS. Borland C and Quattro Pro are not so clever.
+A word of warning: WP 6.0 in text mode exits with video errors on
+some machines, which can only be reset by the DOS command "mode co80".
+If the xPCmouse cursor vanishes after a WP exit, then expect this error.
+
+INTERRUPTS.
+Program xPC-Mouse hooks interrupts 10h, 08h, 13h, 21h and 16h. We
+explain each one.
+
+Int 10h is hooked to de-select a selected screen region every time a
+ program calls int 10h. The decision is made by a code segment variable,
+ which records whether or not a screen segment has been highlighted.
+
+Int 08h is hooked to stuff the keyboard buffer on every timer tick, 18.2
+ per second. This patch affects the pastebuffer and methods /A1, /A2 and
+ /A3. The overhead of this patch is low because almost all the keybuffer
+ stuffing gets done by calls to int 10h.
+
+ A second function of int 08h is to re-install the mouse handler on
+ request. The requests come from program starts and exits, a command
+ line /R or a hot button sequence.
+
+ I did a speed test on the code by running a benchmark with xpcmouse
+ loaded and also unloaded. The benchmark in each case ran in the same
+ time (accurate to 0.1 seconds in 60 seconds). Finally, I altered the
+ routine "HouseKeeping" to emit a BELL when entered and then did a lot
+ of operations with the mouse to get an idea of how often the house
+ keeping duties happened. Basically, nothing happens when the mouse is
+ idle or when the mouse is moved. It takes a mouse button click to
+ invoke the house keeping functions. My conclusion is that the int 08h
+ overhead is negligible.
+
+ Programs that avoid interrupt 10h, such as some ASM applications that
+ do low-level video access, have to rely entirely on timer 08h to stuff
+ the keyboard. These programs can be identified by the fact that the
+ mouse cursor is always ON and highlighted screen areas do not get
+ erased.
+
+Int 13h is for the disk. When the disk is being accessed, it is a bad
+ idea to request file opens and writes. We hook this interrupt to get
+ information about disk only, and use the resulting flag to avoid
+ writing to the disk at the wrong moment. Only used if the compile
+ included paste functions and the append file functions.
+
+Int 16h is hooked to get a new function 80h that xPC-Mouse uses to see
+ if it is already installed. This function modifies register AH by
+ decrementing it. It returns in BX the offset of the paste buffer and in
+ ES the segment of the paste buffer.
+
+ The second job of interrupt 16h is to stuff characters into the
+ keybuffer. This is done to speed the injection of characters into a
+ program, because programs generally write to the screen and read
+ characters from the keyboard.
+
+ Ralf Brown suggests that conflicts can occur with any particular choice
+ of a function for interrupt 16h. The proper procedure discussed by Ralf
+ won't work with xPCmouse, because a rerun of xpcmouse has to be able to
+ inquire with int 16h to find the address of the paste buffer.
+
+Int 2fh is used in the program to detect the presence of Win 3.1 and to
+ issue clipboard commands to windows. It is not modified in xPC-Mouse.
+
+Int 21h is patched in order to keep xPC-Mouse alive after each program
+ start or exit. The only int 21h functions affected are 00h (exit), 4ch
+ (exit) and 4b00h (execute program). The patch only sets flags, no
+ actual re-install occurs within the interrupt call.
+
+ When a program is executed, int 21h, function 4bh is called, at which
+ time the flag is set. The re-install of the mouse handler happens in
+ the timer interrupt (18 per second).
+
+ When a program exits, int 21h, functions 00h or 4ch, then a flag is
+ set. The actual re-install takes place on the next timer click after
+ exit, via interrupt 08h.
+
+ There are flags set by /N0, /N1, /N2 and /N3 to turn these features on
+ and off in all combinations. The flags can be set on the fly by running
+ xpcmouse from the command line.
+
+So xPC-Mouse works at the normal dos prompt and also with dos shells
+started within user programs. In particular, xPC-Mouse works with
+COMMANDO and WCED command line editors. In these programs, xPC-Mouse
+adds cursor positioning on the command line, double-click on file names
+and pasting of file names onto the command line at the text cursor
+position.
+
+
+STACKS SETTING.
+If your system does not work with xPC-Mouse, then it has been suggested
+that you might try the following in CONFIG.SYS:
+
+                              STACKS=9,256
+
+Maybe. This is the Win 95 default. Multiple interrupts can use more
+stack space than DOS normally allows. The problem is almost non-existent
+in DOS 6 and 7.
+
+Generally, if your system does not work with standard settings, then
+something strange is going on with TSRs. Try xpcmouse with a plain
+vanilla floppy boot disk. Add TSR programs until you can isolate the
+problem.
+
+KEYBOARD INTERRUPTS.
+XPCmouse uses them via int 16h. The timer interrupt is also used to
+inject characters into the keyboard buffer. And the keyboard buffer is
+read by interrupt 16h.
+
+UN-INSTALL.
+Use option /u to un-install xPC-Mouse. But this is only possible, if
+there is no other TSR loaded after xPC-Mouse that hooks the same int
+vectors. If LOADHIGH is used to load xPC-Mouse, then /U works in more
+situations, eg, you can shell out of a text editor to kill the TSR.
+
+In use with wced, the commandline editor, it was possible to unload
+wced, then xPC-Mouse, then reload them in reverse order. The order is
+determined by which application hooks interrupts first.
+
+
+EXTENDED TEXT MODES.
+xPC-Mouse believes an extended text mode to be active if a video mode
+with a higher mode number than the highest in standard vga (=13h) is
+active and if a text page needs no more than 800h (4096 decimal) bytes.
+
+No mouse driver I know of supports extended text modes, so don't expect
+the mouse cursor to cover the entire screen in anything but 24x80 mode.
+
+Perhaps this is a software design error to be blamed on Microsoft. For
+example, the DOS command MODE supports 132 columns and 25, 43, 60 lines.
+But those modes do not work with any mouse device driver, including
+Microsoft's mouse drivers!
+
+
+MEMORY USAGE.
+With arrow key emulation and full size paste buffer the size is 5k.
+xPC-Mouse uses 2k for its text buffer, making resident code sizes of 3k
+to 5k possible. There is a sizable non-resident portion of xPC-Mouse
+that contains error messages, help screens, etc. These are not left in
+memory, therefore the disk size of xPC-Mouse does not tell you how much
+memory it uses.
+
+  Example: Version 1.2 of xPCmouse uses 5k memory.
+
+  Run Microsoft's program "mem" as follows: mem /m xpcmouse
+  The report is 5024 bytes. That's 4.9 kilobytes.
+
+  Change the xPCmouse command line to include "/B0". Then pasting is
+  disabled and the resident size reported is 2976 bytes. That's 2.9
+  kilobytes. See, however, the notes below about XPCarrow.exe.
+
+CURSOR KEYS ONLY. If you want a program that uses less memory, and are
+willing to give up the paste features, then try XPCarrow.exe, which does
+cursor key functions only (1.6k resident).
+
+PASTE ONLY. If you want a program that uses less memory, and are willing
+to give up the cursor features, then try XPCpaste.exe, which does paste
+functions only (4.1k resident = 2.1k code + 2k buffer).
+
+Compilation of these special configurations is done by setting the three
+compiler-time equates ENABLECURSOR, ENABLEPASTE and ENABLEFILEAPPEND in
+the source file xpcmouse.asm.
+
+On 8086/8088 machines (do know of one still being used?), setting the
+variable XT to TRUE will increase memory requirements by 50 bytes.
+Getting rid of the ENABLEFILEAPPEND code will expunge the windows paste
+and the file append on hot button code to save some additional space:
+336 bytes.
+
+Read the notes in XPCMOUSE.ASM about the programs of Vincent Penquerc'h
+(penquerc@merlin.enssat.fr). Earlier versions of PCmouse (by Juergen
+Weber) did not have the cursor functions of xPC-Mouse, and therefore
+they will use about 500 bytes less. Also available is a source package
+from Grant Gustafson for cursor only functions, called MOUSE2G. It is
+available at http://www.coast.net/simtel/msdos/screen/ in a file with a
+similar name. Finally, you could write what you want using the PCmouse,
+Mouse2g and xPC-Mouse ASM sources as a guide.
+
+HIGHLIGHTING METHOD.
+The selecting of a screen area is indicated by XORing the attribute
+bytes with 80, to de-select they are simply XORed again. To use another
+value use the /Xddd option. With ddd=0 you get no visible selection.
+Value /X119 is recommended for monochrome (same as option /M). Option
+/X78 (red highlight) works on a number of machines with cirrus logic
+video card.
+
+There are three highlighting methods.
+
+ The first is the Xterm double-click method, which highlights a word on
+   double-click of the mouse.
+
+ The second is the Xterm method for highlighting consecutive characters.
+   It defaults to whole lines for larger drags of the mouse. The
+   highlight will be done by this method, provided the mouse is dragged
+   along the same line, or considering the first mouse press as the
+   origin, then the mouse is dragged into Quadrants 1,3 or 4 (drag to
+   upper right, lower left or lower right).
+
+ The third method is the matrix method for highlighting a rectangle of
+   characters. To do it, the mouse button is pressed at the lower right
+   of the rectangle and dragged to the upper left corner. The skill is
+   easy to learn. A quick lesson: put the mouse in the lower right of
+   the screen and drag it to the home position. That highlights the
+   maximum rectangle (25x80).
+
+============================ RETURN VALUES ==============================
+
+               0  successfully installed
+               1  hardware/software requirements failed
+               2  already installed
+               3  Help request processed, no operations done
+
+
+=========================== ERROR MESSAGES ==============================
+
+    xPC-Mouse was already installed.
+       Tried to install xPC-Mouse program twice, failure, the program
+       will not be installed twice.
+
+    xPC-Mouse was not installed yet.
+       Tried to re-install xPC-Mouse, failure, because the program was
+       not installed.
+
+    xPC-Mouse is un-installed.
+       Successful /U option de-installs xPC-Mouse and frees memory.
+
+    xPC-Mouse is re-activated.
+       Successful /R option resets all interrupt vectors and restarts
+       the driver.
+
+    Could not un-install xPC-Mouse.
+       Unsuccessful /U option, because another TSR program was installed
+       after xPC-Mouse, or else something went wrong and address
+       conflicts were found.
+
+    No mouse driver found or driver too old.
+       The mouse program supplied with the mouse by the manufacturer is
+       not installed or else has a very old version with missing mouse
+       driver features. Fix: install the driver in config.sys (then
+       reboot) or in autoexec.bat (and type the same command line at the
+       dos prompt). If you can't find one, then look for "mouse.co_" on
+       Windows 3.1 distribution disks. The program EXPAND changes this
+       file in Microsoft's "mouse.com". This is not the ideal mouse
+       driver, but it works. For better choices, see the documentation
+       above on mouse driver "gmouse.com", especially if you want to use
+       xPCmouse in a dos box in windows 3.1. For Win 95, the only choice
+       is to use Microsoft's mouse driver (it works).
+
+    xPC-Mouse not installed.
+       Attempt to install xPC-Mouse in memory failed, due to something
+       missing, like the mouse driver, or not enough space, or some
+       conflict.
+
+    xPC-Mouse needs at least an 80286 cpu.
+       Attempt to install xPC-Mouse in memory failed, because the driver
+       was compiled for 286 or better CPU, and this CPU tests out to be
+       8088 or 8086. Fix: Compile xpcmouse.asm with symbol XT set to
+       TRUE (see the ASM file). Use that xpcmouse.exe instead of the
+       present one. NOTE: The version in the distribution was compiled
+       for a 286 or better cpu. An XT compile is recommended only in
+       case you have a dusty old IBM-PC from the years 1981-1984 (8088
+       or 8086 processor). The IBM-AT has a 286 processor.
+
+    Cannot open file.
+       A file open for name X was attempted by either the option /F=X or
+       the option /D=X. The open failed, for some reason. In the first
+       case, it is lack of disk space or a bad file name. In the second
+       case, the file is being opened in read-only mode and it was not
+       found.
+
+    /F:X error: Name X has a 20 character maximum.
+       The file name must fit into a fixed buffer in the resident code
+       of size 20 bytes. Use a different name. Or else use the command
+       line interface which allows 128 character file names. Sometimes
+       the DOS command "subst.exe" can be used to shorten a file name
+       into the 20 character limit.
+
+    /F=X error: /F=X allows name X with 128 character maximum.
+       A file name was entered which exceeds the 128 character limit.
+       Use a shorter name.
+
+    BEEP.
+       The bell sounds on certain errors, especially on failure to open
+       the TMP file and failures in pasting the text into the windows
+       clipboard. Beeps in Windows mean: try again.
+
+============================== PROBLEMS ==================================
+
+A statement from 1983: If I leave Borland's TD386 with 1993 xPC-Mouse
+                       1.0 installed it hangs the computer.
+
+  When MSDOS 5.0 came out Borland had to distribute a patch for TD386
+  because then the same problem occurred. So this seems to be not
+  xPC-Mouse 1.0's problem but TD386's. (1993 documentation)
+
+  1997 update. Maybe... The bug fixes for version 1.1 suggest that the
+  problem might have been the interrupt 21h patch. The changes in
+  xPC-Mouse 1.1 may make this problem go away. I tried to make TD386
+  hang on exit, but it would not happen with versions 1.1 or 1.2. In
+  fact, xPC-Mouse stayed alive on exit, using only the /N1 command line
+  switch.
+
+A statement from 1993: It has been reported that xPC-Mouse did not find
+                       the mouse driver.
+
+  This happens with some old mouse drivers. To solve this problem
+  install a new mouse driver. A new mouse driver can be found on the Win
+  3.1 disks (mouse.co_ becomes mouse.com via EXPAND.EXE). See also the
+  recommended driver list above, especially "gmouse.com", available from
+  the WWW site (Jan 1997)
+
+                      http://www.coast.net/simtel/
+
+
+=========================== KERMIT and RZ/SZ ===========================
+
+The use of xPC-Mouse with Kermit has been tested. There are many
+"gotchas" in using this interface with a remote Unix system or remote
+DOS system. The easiest interface is the default /A1. Try it first, then
+the others.
+
+This information is current in January 1998. Directory locations and FTP
+sites change with time.
+
+To get a copy of MS Kermit 3.13 or later, use anonymous FTP to
+watsun.cc.columbia.edu. Hunt for the right ZIP file and download to your
+system. You can get it with Netscape or Lynx browsers using URL
+
+                       ftp://ftp.cc.columbia.edu/
+
+Also recommended for fast uploads and downloads is SZ/RZ, invoked by
+program DSZ.COM from Omen Technology INC. The shareware version is
+available from www.coast.net, in directory SimTel/msdos/zmodem. Use a
+mirror site during peak hours, eg, www.cdrom.com and www.simtel.net.
+
+
+============================= THE AUTHORS ================================
+
+Jrgen G. Weber is now (1994) a student of computer science at the
+university of Stuttgart in southern Germany. He is also the author of
+ZSIM, a Z80 - CP/M bios emulator that is available from ftp servers.
+
+Grant B. Gustafson is now (1998) professor of mathematics at the
+University of Utah in Salt Lake City. Besides xPC-Mouse, he has written
+text editors, C libraries, business programs and mathematical software.
+
+Reproducible bugs in the operation of xPC-Mouse can be sent via email to
+the authors.
+
+   This is free software (don't send money).
+   Postcards and comments are welcome!
+
+   Jrgen G. Weber               GB Gustafson
+   Wiesentalstraáe 1             113 JWB Math Dept Univ Utah
+   D-74523 Schw„bisch Hall       Salt Lake City, UT 84112
+   Germany - European Union      USA
+
+   email: weberj@dia.informatik.uni-stuttgart.de
+   email: gustafson@math.utah.edu
+
+   Copyright 1994-1998 by Jrgen G. Weber and GB Gustafson.
+
+
+=============================== NO WARRANTY ============================
+
+The authors do not warrant the correctness of the documentation or the
+function of the program. They do not warrant uninterrupted or error free
+operation of the Program.
+
+The user is advised to test the program fully. The risk of using this
+software is exclusively with the user. The author assumes no liability
+whatever for damages of any kind that might result from using the
+program.
+
+=========== End of File xPC-Mouse. Last edited 5-Sept-1998. ============
+
+
+
+
+
+
