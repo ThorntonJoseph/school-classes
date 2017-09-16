@@ -1,9 +1,9 @@
-package com.myapp.ui;
+package com.myapp.A1prj;
 
 public interface Guided {
 	public void moveleft();
 	 public void moveright();
-	 public void moveupforward();
+	 public void moveup();
 	 public void movedown();
-	 public void jumptolocation();
+	 public void jumptolocation(Location l);
 }

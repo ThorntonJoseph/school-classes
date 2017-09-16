@@ -1,4 +1,4 @@
-package com.myapp.ui;
+package com.myapp.A1prj;
 
 
 import com.codename1.ui.Display;
@@ -38,9 +38,7 @@ public class Starter {
             current.show();
             return;
         }
-        Form hi = new Form("Hi World");
-        hi.addComponent(new Label("Hi World"));
-        hi.show();
+       new Game();
     }
 
     public void stop() {
