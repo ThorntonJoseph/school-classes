@@ -41,11 +41,12 @@ public class SpaceShip extends rescuers{
 	//controls for opening and closing the space ship door
 	public void opendoor() {
 		doorstate=Open;
-		closedoor();
+		super.setsize(150);
 	}
 	
 	public void closedoor() {
 		doorstate=Closed;
+		super.setsize(100);
 	}
 	
 	

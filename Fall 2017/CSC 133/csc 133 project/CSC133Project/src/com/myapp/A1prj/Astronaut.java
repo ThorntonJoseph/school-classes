@@ -26,10 +26,14 @@ public class Astronaut extends Opponents implements Move{
 		super.setdirection(rn.nextInt(359));
 	}
 	// when this object is attacked it takes damage and color fades
-	public void hit() {
+	public void fight() {
 		Health--;
 		changespeed();
 		setcolor(ColorUtil.rgb(super.getcolor()-fade, 0, 0));
+	}
+	// returns health
+	public int gethealth() {
+		return Health;
 	}
 	// this object is will move by itself
 	public void Moveit() {

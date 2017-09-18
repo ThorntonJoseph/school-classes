@@ -19,4 +19,10 @@ public class Location {
 	public String ToString() {
 		return ("("+x+","+y+")");
 	}
+	public double getx() {
+		return this.x;
+	}
+	public double gety() {
+		return this.y;
+	}
 }

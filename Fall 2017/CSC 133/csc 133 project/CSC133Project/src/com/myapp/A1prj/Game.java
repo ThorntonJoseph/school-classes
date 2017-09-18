@@ -29,6 +29,37 @@ public class Game extends Form {
 			 switch (sCommand.charAt(0)) {
 			 	case 'e':
 			 		gw.expand();
+			 	case 'a':
+			 		gw.transfer();
+			 	case 'o':
+			 		gw.transfer();
+			 	case 'r':
+			 		gw.moveright();
+			 	case 'l':
+			 		gw.moveleft();
+			 	case 'u':
+			 		gw.moveup();
+			 	case 'c':
+			 		gw.contract();
+			 	case 'd':
+			 		gw.movedown();
+			 	case 't':
+			 		gw.clock();
+			 	case 's':
+			 		gw.openenter();
+			 	case 'w':
+			 		gw.pretenda();
+			 	case 'f':
+			 		gw.pretendaa();
+			 	case 'p':
+			 		gw.gamestate();
+			 	case 'm':
+			 		gw.map();
+			 	case 'x':
+			 		
+			 	case 'y':
+			 		System.exit(0);
+			 	case 'n':
 			 		break;
 			 //add code to handle rest of the commands
 			 } //switch
