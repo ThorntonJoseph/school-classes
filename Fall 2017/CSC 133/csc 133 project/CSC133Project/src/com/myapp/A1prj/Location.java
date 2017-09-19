@@ -16,8 +16,8 @@ public class Location {
 	public static Location add(Location l1, Location l2) {
 		return new Location(l1.x+l2.x,l1.y+l2.y);
 	}
-	public String ToString() {
-		return ("("+x+","+y+")");
+	public String toString() {
+		return ("Loc=("+x+","+y+")");
 	}
 	public double getx() {
 		return this.x;

@@ -14,8 +14,10 @@ public class SpaceShip extends rescuers{
 		Random rn = new Random();
 		int x=1024;
 		int y=768;
+		Location alright = new Location(rn.nextInt(x),rn.nextInt(y));
+		super.setlocation(alright);
 		super.setsize(100);
-		super.setlocation(new Location(rn.nextInt(x), rn.nextInt(y)));
+		
 		//set door state
 		doorstate=Closed;
 	}
@@ -47,6 +49,9 @@ public class SpaceShip extends rescuers{
 	public void closedoor() {
 		doorstate=Closed;
 		super.setsize(100);
+	}
+	public String toString() {
+		return (this.getlocation().toString()+ " Color="+this.getcolor()+" size="+this.getsize());
 	}
 	
 	

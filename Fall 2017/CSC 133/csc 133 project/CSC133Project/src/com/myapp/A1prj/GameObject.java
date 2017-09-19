@@ -3,13 +3,13 @@ import com.codename1.charts.util.ColorUtil;
 import com.codename1.ui.geom.*;
 public abstract class GameObject {
 	private int size,color;
-	private Rectangle2D bounds;
+	private Rectangle2D bounds = new Rectangle2D();
 	public static final int speedconstant=1;
 	private Location L;
 	
 	public void setsize(int size) {
 		this.size=size;
-		bounds.setBounds(L.getx(), L.gety(), size/2, size/2);
+		//bounds=new Rectangle2D(L.getx(), L.gety(), size/2, size/2);
 	}
 	public int getsize() {
 		return size;
@@ -20,8 +20,9 @@ public abstract class GameObject {
 	}
 	// set location of this object
 	public void setlocation(Location l) {
-		L.setlocation(l);
-		bounds.setBounds(L.getx(), L.gety(), size/2, size/2);
+			L=l;
+			bounds.setBounds(L.getx(), L.gety(), size/2, size/2);
+		
 	}
 	// returns this objects color
 	public int getcolor() {

@@ -18,8 +18,8 @@ public class Alien extends Opponents implements Move{
 		super.setcolor(ColorUtil.BLUE);
 	// create object at random location
 		Random rn = new Random();
-		super.setsize(100);
 		super.setlocation(new Location(rn.nextInt(x), rn.nextInt(y)));
+		super.setsize(100);
 		oldlocation=super.getlocation();
 		//set direction 
 		super.setdirection(rn.nextInt(359));
@@ -45,8 +45,8 @@ public class Alien extends Opponents implements Move{
 	
 	}
 	//overwrites tostring method
-	public String ToString() {
-		return ("Location: " + super.getlocation().toString() +" Color: " + super.getcolor() + " Size: " + 
+	public String toString() {
+		return ("Alien Location: " + super.getlocation().toString() +" Color: " + super.getcolor() + " Size: " + 
 				super.getsize() + " Speed: " + super.getspeed() + " Direction: " + getdirection());
 	}
 	

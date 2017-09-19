@@ -6,8 +6,10 @@ import com.codename1.charts.util.ColorUtil;
 
 public class Astronaut extends Opponents implements Move{
 	//set variables
+	private Location oldlocation,newlocation;
 	private int Health;
 	private int fade=50;
+	private Random rn = new Random();
 	//create an astronaut
 	public Astronaut() {
 	//set variables
@@ -19,9 +21,9 @@ public class Astronaut extends Opponents implements Move{
 		Health =5;
 		setcolor(ColorUtil.rgb(255, 0, 0));
 	// create object at random location
-		Random rn = new Random();
-		super.setsize(100);
 		super.setlocation(new Location(rn.nextInt(x), rn.nextInt(y)));
+		super.setsize(100);
+		
 	// set direction
 		super.setdirection(rn.nextInt(359));
 	}
@@ -37,11 +39,17 @@ public class Astronaut extends Opponents implements Move{
 	}
 	// this object is will move by itself
 	public void Moveit() {
-		
+		double deltax,deltay;
+		double theta;
+		theta=rn.nextDouble();
+		deltax=Math.cos(theta);
+		deltay=Math.sin(theta);
+		newlocation = oldlocation= Location.add(oldlocation,new Location(deltax,deltay));
+		this.setlocation(newlocation);
 	}
 	//this objects color can change
-	public void setcolor(int color) {
-		
+	public void setcolor(int fade) {
+		super.setcolor(fade);
 	}
 	// sets speed of object
 	private void changespeed() {
@@ -49,8 +57,8 @@ public class Astronaut extends Opponents implements Move{
 	}
 	
 	//to string method for this object
-	public String ToString() {
-		return ("Location: " + getlocation().ToString() +" Color: " + super.getcolor() + " size: "+ super.getsize()+ " Speed: " +super.getspeed()
+	public String toString() {
+		return ("Astronaut Location: " + getlocation().toString() +" Color: " + super.getcolor() + " size: "+ super.getsize()+ " Speed: " +super.getspeed()
 				+ " Direction: " +super.getdirection()+ " Health: " +Health );
 	}
 
