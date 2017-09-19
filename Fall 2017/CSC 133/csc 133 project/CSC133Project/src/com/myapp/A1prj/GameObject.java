@@ -1,15 +1,25 @@
 package com.myapp.A1prj;
+import java.util.Random;
+
 import com.codename1.charts.util.ColorUtil;
 import com.codename1.ui.geom.*;
 public abstract class GameObject {
-	private int size,color;
-	private Rectangle2D bounds = new Rectangle2D();
+	private static final int width = 1024;
+	private static final int height = 768;
 	public static final int speedconstant=1;
+	private int size,color;
+	private Rectangle2D bounds;
 	private Location L;
+	private Random rn = new Random();
 	
+	// constructs object of this type
+	public GameObject() {
+		setlocation(new Location(rn.nextInt(width), rn.nextInt(height)));
+		bounds=new Rectangle2D(L.getx(),L.gety(),size,size);
+	}
 	public void setsize(int size) {
 		this.size=size;
-		//bounds=new Rectangle2D(L.getx(), L.gety(), size/2, size/2);
+		//bounds=new Rectangle2D(L.getx(), L.gety(), size, size);
 	}
 	public int getsize() {
 		return size;
@@ -35,4 +45,9 @@ public abstract class GameObject {
 	public Rectangle2D getbounds() {
 		return this.bounds;
 	}
+	
+	public String toString() {
+	 return "Location: " + this.getlocation().toString() +" Color:"+ "["+ ColorUtil.red(color)+","+ColorUtil.green(color)+
+			 ","+ ColorUtil.blue(color)+"]";
+			 }
 }

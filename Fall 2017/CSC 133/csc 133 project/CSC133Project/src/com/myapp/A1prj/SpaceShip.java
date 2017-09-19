@@ -10,14 +10,6 @@ public class SpaceShip extends rescuers{
 	public SpaceShip() {
 		//set color
 		super.setcolor(ColorUtil.GREEN);
-		// create object at random location
-		Random rn = new Random();
-		int x=1024;
-		int y=768;
-		Location alright = new Location(rn.nextInt(x),rn.nextInt(y));
-		super.setlocation(alright);
-		super.setsize(100);
-		
 		//set door state
 		doorstate=Closed;
 	}
@@ -25,10 +17,10 @@ public class SpaceShip extends rescuers{
 	// this objects size can change according to game
 	public void setsize(int size) {
 		if(size>1024) {
-			super.setsize(1024);
+		// do nothing
 		}
 		else if(size<50) {
-			super.setsize(50);
+		// do nothing
 		}
 		else {
 			super.setsize(size);
@@ -43,16 +35,20 @@ public class SpaceShip extends rescuers{
 	//controls for opening and closing the space ship door
 	public void opendoor() {
 		doorstate=Open;
-		super.setsize(150);
+		closedoor();
+		
 	}
 	
 	public void closedoor() {
 		doorstate=Closed;
-		super.setsize(100);
+		
 	}
-	public String toString() {
-		return (this.getlocation().toString()+ " Color="+this.getcolor()+" size="+this.getsize());
+	// expand space ship door
+	public void expand() {
+		setsize(super.getsize()+50);
 	}
-	
-	
+	// expand space ship door
+	public void contract() {
+		setsize(super.getsize()-50);
+	}
 }
