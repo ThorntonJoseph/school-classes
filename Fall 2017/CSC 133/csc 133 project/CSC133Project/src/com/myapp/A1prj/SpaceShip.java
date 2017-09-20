@@ -1,4 +1,5 @@
 package com.myapp.A1prj;
+
 import java.util.Random;
 import com.codename1.charts.util.ColorUtil;
 public class SpaceShip extends rescuers{
@@ -9,6 +10,7 @@ public class SpaceShip extends rescuers{
 	boolean doorstate;
 	public SpaceShip() {
 		//set color
+		super.setsize(100);
 		super.setcolor(ColorUtil.GREEN);
 		//set door state
 		doorstate=Closed;
@@ -17,12 +19,13 @@ public class SpaceShip extends rescuers{
 	// this objects size can change according to game
 	public void setsize(int size) {
 		if(size>1024) {
-		// do nothing
+			//do nothing
 		}
 		else if(size<50) {
-		// do nothing
+			//do nothing
 		}
 		else {
+			System.out.println(size);
 			super.setsize(size);
 		}
 	}
@@ -50,5 +53,11 @@ public class SpaceShip extends rescuers{
 	// expand space ship door
 	public void contract() {
 		setsize(super.getsize()-50);
+	}
+	public String toString() {
+		String parent=super.toString();
+		String me = "SpaceShip: " + parent + " Size: " + super.getsize();
+		return me;
+		
 	}
 }

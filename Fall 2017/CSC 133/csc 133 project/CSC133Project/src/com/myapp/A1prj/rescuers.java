@@ -1,4 +1,5 @@
 package com.myapp.A1prj;
+
 	import java.io.*;
 	import com.codename1.util.MathUtil;
 public abstract class rescuers extends GameObject implements Guided {

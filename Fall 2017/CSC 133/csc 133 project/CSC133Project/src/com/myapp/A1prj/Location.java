@@ -1,5 +1,6 @@
 package com.myapp.A1prj;
 
+
 public class Location {
 	private double x,y;
 	public Location(double x, double y) {
@@ -14,7 +15,8 @@ public class Location {
 		this.y=y;
 	}
 	public static Location add(Location l1, Location l2) {
-		return new Location(l1.x+l2.x,l1.y+l2.y);
+		return new Location(Math.round(l1.x*10.0)/10.0+Math.round(l2.x*10.0)/10.0,Math.round(l1.y*10.0)/10.0+
+				Math.round(l2.y*10.0)/10.0);
 	}
 	public String toString() {
 		return ("("+x+","+y+")");

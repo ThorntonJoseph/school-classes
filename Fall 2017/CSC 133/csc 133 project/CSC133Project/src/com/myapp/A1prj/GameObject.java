@@ -1,4 +1,5 @@
 package com.myapp.A1prj;
+
 import java.util.Random;
 
 import com.codename1.charts.util.ColorUtil;
@@ -15,11 +16,10 @@ public abstract class GameObject {
 	// constructs object of this type
 	public GameObject() {
 		setlocation(new Location(rn.nextInt(width), rn.nextInt(height)));
-		bounds=new Rectangle2D(L.getx(),L.gety(),size,size);
 	}
 	public void setsize(int size) {
 		this.size=size;
-		//bounds=new Rectangle2D(L.getx(), L.gety(), size, size);
+		bounds=new Rectangle2D(L.getx(), L.gety(), size, size);
 	}
 	public int getsize() {
 		return size;
@@ -31,8 +31,7 @@ public abstract class GameObject {
 	// set location of this object
 	public void setlocation(Location l) {
 			L=l;
-			bounds.setBounds(L.getx(), L.gety(), size/2, size/2);
-		
+			bounds=new Rectangle2D(L.getx(), L.gety(), size, size);	
 	}
 	// returns this objects color
 	public int getcolor() {

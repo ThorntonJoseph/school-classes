@@ -1,5 +1,6 @@
 package com.myapp.A1prj;
 
+
 import java.util.Random;
 
 import com.codename1.charts.util.ColorUtil;
@@ -12,6 +13,7 @@ public class Astronaut extends Opponents implements Move{
 	//create an astronaut
 	public Astronaut() {
 	//set speed
+		Health=5;
 		setcolor(ColorUtil.rgb(255, 0, 0));
 	}
 	// when this object is attacked it takes damage and color fades
@@ -39,7 +41,7 @@ public class Astronaut extends Opponents implements Move{
 	public String toString() {
 		String parent = super.toString();
 		String me = " Health: "+Health;
-		return parent+me;
+		return "Astronaut: "+parent+me;
 	}
 
 }

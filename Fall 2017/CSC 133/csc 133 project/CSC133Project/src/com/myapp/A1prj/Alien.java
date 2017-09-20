@@ -1,5 +1,6 @@
 package com.myapp.A1prj;
 
+
 import java.util.Random;
 
 import com.codename1.charts.util.ColorUtil;
@@ -20,5 +21,9 @@ public class Alien extends Opponents implements Move{
 	public void setspeed() {
 		
 	
+	}
+	public String toString() {
+		String parent =super.toString();
+		return "Alein: "+ parent;
 	}
 }

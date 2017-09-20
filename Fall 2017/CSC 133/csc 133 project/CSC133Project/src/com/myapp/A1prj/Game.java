@@ -1,4 +1,5 @@
 package com.myapp.A1prj;
+
 import com.codename1.ui.Form;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.Label;
@@ -31,10 +32,10 @@ public class Game extends Form {
 			 		gw.expand();
 			 		break;
 			 	case 'a':
-			 		gw.transfer();
+			 		gw.transferalien();
 			 		break;
 			 	case 'o':
-			 		gw.transfer();
+			 		gw.transferastronaut();
 			 		break;
 			 	case 'r':
 			 		gw.moveright();

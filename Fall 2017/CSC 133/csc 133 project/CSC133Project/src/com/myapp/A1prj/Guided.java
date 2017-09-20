@@ -1,5 +1,6 @@
 package com.myapp.A1prj;
 
+
 public interface Guided {
 	public void moveleft();
 	 public void moveright();

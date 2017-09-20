@@ -1,4 +1,5 @@
 package com.myapp.A1prj;
+
 import java.util.Random;
 public abstract class Opponents extends GameObject {
 	private int speed,direction;
@@ -42,7 +43,7 @@ public abstract class Opponents extends GameObject {
 	}
 	public String toString() {
 		String parent=super.toString();
-		String me = " color: "+ this.getcolor()+" size: "+ this.getsize()+ " speed: "+ getspeed()+" direction: "+
+		String me = " size: "+ this.getsize()+ " speed: "+ getspeed()+" direction: "+
 		direction;
 	return parent+me;
 	}
