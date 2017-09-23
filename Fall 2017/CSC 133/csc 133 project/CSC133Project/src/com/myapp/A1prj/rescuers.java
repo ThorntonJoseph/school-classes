@@ -49,8 +49,4 @@ public abstract class rescuers extends GameObject implements Guided {
 		 super.setlocation(l);
 	 }
 	 
-	 //size can change
-	 public void setsize(int size) {
-		 super.setsize(size);
-	 }
 }

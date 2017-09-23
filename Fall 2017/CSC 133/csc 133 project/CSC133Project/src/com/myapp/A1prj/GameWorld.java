@@ -7,7 +7,6 @@ public class GameWorld {
 	private int score;
 	private int numastronauts=4;
 	private int numaliens=3;
-	private int maxnumaliens=50;
 	private int numAstronautsaved=0;
 	private int numAliensin=0;
 	private ArrayList Opponents = new ArrayList();
