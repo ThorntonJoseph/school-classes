@@ -9,7 +9,6 @@ public abstract class GameObject {
 	private static final int height = 768;
 	public static final int speedconstant=1;
 	private int size,color;
-	private Rectangle2D bounds;
 	private Location L;
 	private Random rn = new Random();
 	
@@ -19,7 +18,6 @@ public abstract class GameObject {
 	}
 	public void setsize(int size) {
 		this.size=size;
-		bounds=new Rectangle2D(L.getx(), L.gety(), size, size);
 	}
 	public int getsize() {
 		return size;
@@ -31,7 +29,6 @@ public abstract class GameObject {
 	// set location of this object
 	public void setlocation(Location l) {
 			L=l;
-			bounds=new Rectangle2D(L.getx(), L.gety(), size, size);	
 	}
 	// returns this objects color
 	public int getcolor() {
@@ -40,9 +37,6 @@ public abstract class GameObject {
 	// sets this objects color
 	public void setcolor(int color) {
 		this.color=color;
-	}
-	public Rectangle2D getbounds() {
-		return this.bounds;
 	}
 	
 	public String toString() {

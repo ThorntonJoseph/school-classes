@@ -12,8 +12,7 @@ public abstract class rescuers extends GameObject implements Guided {
 	public void moveleft() {
 		 deltax=-5*speedconstant;
 		 deltay=0;
-		 currentLocation=super.getlocation();
-		 currentLocation=Location.add(currentLocation, new Location(deltax,deltay));
+		 currentLocation=new Location(super.getlocation().getx()+deltax,super.getlocation().gety()+deltay);
 		 super.setlocation(currentLocation);
 	 }
 	
@@ -21,8 +20,7 @@ public abstract class rescuers extends GameObject implements Guided {
 	 public void moveright() {
 		 deltax=5*speedconstant;
 		 deltay=0;
-		 currentLocation=super.getlocation();
-		 currentLocation=Location.add(currentLocation, new Location(deltax,deltay));
+		 currentLocation=new Location(super.getlocation().getx()+deltax,super.getlocation().gety()+deltay);
 		 super.setlocation(currentLocation);
 	 }
 	 
@@ -30,8 +28,7 @@ public abstract class rescuers extends GameObject implements Guided {
 	 public void moveup() {
 		 deltax=0;
 		 deltay=5*speedconstant;
-		 currentLocation=super.getlocation();
-		 currentLocation=Location.add(currentLocation, new Location(deltax,deltay));
+		 currentLocation=new Location(super.getlocation().getx()+deltax,super.getlocation().gety()+deltay);
 		 super.setlocation(currentLocation);
 	 }
 	 
@@ -40,7 +37,7 @@ public abstract class rescuers extends GameObject implements Guided {
 		 deltax=0;
 		 deltay=-5*speedconstant;
 		 currentLocation=super.getlocation();
-		 currentLocation=Location.add(currentLocation, new Location(deltax,deltay));
+		 currentLocation=new Location(super.getlocation().getx()+deltax,super.getlocation().gety()+deltay);
 		 super.setlocation(currentLocation);
 	 }
 	 

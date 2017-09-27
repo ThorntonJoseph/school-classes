@@ -25,7 +25,6 @@ public class SpaceShip extends rescuers{
 			//do nothing
 		}
 		else {
-			System.out.println(size);
 			super.setsize(size);
 		}
 	}
@@ -59,5 +58,12 @@ public class SpaceShip extends rescuers{
 		String me = "SpaceShip: " + parent + " Size: " + super.getsize();
 		return me;
 		
+	}
+	public boolean contains(double x,double y) {
+		if(x>super.getlocation().getx()-(super.getsize()/2)&& x<super.getlocation().getx()+(super.getsize()/2)
+				&& y>super.getlocation().gety()-(super.getsize()/2) && y<super.getlocation().getx()+(super.getsize()/2)) {
+			return true;
+		}else
+			return false;
 	}
 }

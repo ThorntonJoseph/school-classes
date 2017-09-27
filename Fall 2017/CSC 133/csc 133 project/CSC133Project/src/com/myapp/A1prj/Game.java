@@ -8,6 +8,7 @@ import com.codename1.ui.events.ActionEvent;
 import java.lang.String; 
 
 public class Game extends Form {
+	private boolean exit=false;
 	private GameWorld gw;
 	public Game() {
 		gw = new GameWorld();
@@ -27,6 +28,7 @@ public class Game extends Form {
 
 			 String sCommand=myTextField.getText().toString();
 			 myTextField.clear();
+			 if(exit==false) {
 			 switch (sCommand.charAt(0)) {
 			 	case 'e':
 			 		gw.expand();
@@ -71,15 +73,26 @@ public class Game extends Form {
 			 		gw.map();
 			 		break;
 			 	case 'x':
+			 		exit=true;
+			 		System.out.println("are you sure you want to exit y or n");
 			 		break;
-			 		
-			 	case 'y':
-			 		System.exit(0);
-			 		break;
-			 	case 'n':
-			 		break;
-			 //add code to handle rest of the commands
-			 } //switch
+			 }//switch
+			 } //if exit
+			 else {
+				 switch (sCommand.charAt(0)) {
+				 case 'y':
+					 System.exit(0);
+					 break;
+				 case 'n':
+					 exit=false;
+					 System.out.println("then don't hit x");
+					 break;
+				default:
+					System.out.println("Answer the question... do you want to exit y or n");
+					break;
+				 }
+				
+			 }
 			 } //actionPerformed
 			 } //new ActionListener()
 			 ); //addActionListener 

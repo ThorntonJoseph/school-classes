@@ -11,12 +11,8 @@ public class Location {
 		return this;
 	}
 	public void setlocation(Location l) {
-		this.x=x;
-		this.y=y;
-	}
-	public static Location add(Location l1, Location l2) {
-		return new Location(Math.round(l1.x*10.0)/10.0+Math.round(l2.x*10.0)/10.0,Math.round(l1.y*10.0)/10.0+
-				Math.round(l2.y*10.0)/10.0);
+		this.x=Math.round(x*10.0)/10.0;
+		this.y=Math.round(y*10.0)/10.0;
 	}
 	public String toString() {
 		return ("("+x+","+y+")");

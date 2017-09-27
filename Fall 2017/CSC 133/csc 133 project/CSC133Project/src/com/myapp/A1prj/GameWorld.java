@@ -1,5 +1,5 @@
 package com.myapp.A1prj;
-
+import java.util.Iterator;
 import java.util.Random;
 import java.util.ArrayList;
 public class GameWorld {
@@ -9,8 +9,9 @@ public class GameWorld {
 	private int numaliens=3;
 	private int numAstronautsaved=0;
 	private int numAliensin=0;
-	private ArrayList Opponents = new ArrayList();
+	private ArrayList<Opponents> Opponents = new ArrayList<Opponents>();
 	private SpaceShip player;
+	
 	
 	// creates the game world
 	public void init() {
@@ -31,10 +32,10 @@ public class GameWorld {
 		 // creates the player ship
 		SpaceShip player = new SpaceShip();
 	}
-	// code e opens spaceship door
+	// code e expands door size
 	public void expand() {
 		player.expand();
-		System.out.println(player.toString());
+		System.out.println("Spaceships door is larger m to view");
 	}
 	
 	// code a transfer player to random alien location
@@ -50,9 +51,8 @@ public class GameWorld {
 			temp =Opponents.get(rando);
 		}
 		temp =(GameObject)temp;
-		System.out.println("OldLocation: " + player.toString());
 		player.jumptolocation(((GameObject) temp).getlocation());
-		System.out.println("NewLocation: " + player.toString());
+		System.out.println("player has been teleported to an alien.. bad idea to open the door");
 		}
 	}
 	
@@ -69,50 +69,46 @@ public class GameWorld {
 			temp =Opponents.get(rando);
 		}
 		temp = (GameObject)temp;
-		System.out.println("OldLocation: " + player.toString());
 		player.jumptolocation(((GameObject) temp).getlocation());
-		System.out.println("NewLocation: " + player.toString());
+		System.out.println("player has been teleported to an astronaut... make sure your door is small and open it");
 		}
 	}
 	// code r move spaceship right
 	public void moveright() {
-		System.out.println("OldLocation: " + player.toString());
 		player.moveright();
-		System.out.println("NewLocation: " + player.toString());
+		System.out.println("player has moved right 5 clicks m to view");
 	}
 	// code l move spaceship left
 	public void moveleft() {
-		System.out.println("OldLocation: " + player.toString());
 		player.moveleft();
-		System.out.println("NewLocation: " + player.toString());
+		System.out.println("player has moved left 5 clicks m to view");
 	}
 	// code u move spaceship up
 	public void moveup() {
-		System.out.println("OldLocation: " + player.toString());
 		player.moveup();
-		System.out.println("NewLocation: " + player.toString());
+		System.out.println("player has moved up 5 clicks m to view");
 	}
 	//code c close spaceship door
 	public void contract() {
 		player.contract();
-		System.out.println(player.toString());
+		System.out.println("the door is now smaller");
 		
 	}
 	// code d move spaceship down
 	public void movedown() {
-		System.out.println("OldLocation: " + player.toString());
 		player.movedown();
-		System.out.println("NewLocation: " + player.toString());
+		System.out.println("player has moved down 5 clicks m to view");
 		
 	}
 	// code s open door and update score according to previous input
 	public void openenter() {
-		// checks for astronauts
-		for (int i=0;i<numastronauts+numaliens;i++) {
-			GameObject temp =(GameObject) Opponents.get(i);
-			if(player.getbounds().contains(temp.getlocation().getx(),temp.getlocation().gety())) {
+		// checks for contained opponents
+		Iterator<Opponents> itr= Opponents.iterator();
+		while (itr.hasNext()) {
+			Opponents temp=itr.next();
+			if(player.contains(temp.getlocation().getx(),temp.getlocation().gety())) {
 				if(temp instanceof Astronaut) {
-					score+= ((Astronaut) temp).gethealth()*10;
+					score+= ((Astronaut)temp).gethealth()*10;
 					numAstronautsaved++;
 					numastronauts--;
 				}else if(temp instanceof Alien) {
@@ -120,10 +116,8 @@ public class GameWorld {
 					numAliensin++;
 					numaliens--;
 				}
-				Opponents.remove(i);
-				
+				itr.remove();
 			}
-			System.out.println("not contained");
 		}
 		
 			System.out.println("the score is update use p to view status");
@@ -173,19 +167,9 @@ public class GameWorld {
 	public void map() {
 		// prints out player variables
 		System.out.println(player.toString());
-		//prints out astronaut variables
-		for(int i=0;i<numastronauts+numaliens;i++) {
-			GameObject temp= (GameObject) Opponents.get(i);
-			if (temp instanceof Astronaut) {
-				System.out.println(temp.toString());
-			}
-		}
-		// prints out alien variables
-		for(int i=0;i<numaliens+numastronauts;i++) {
-			GameObject temp= (GameObject) Opponents.get(i);
-			if(temp instanceof Alien) {
-				System.out.println(temp.toString());
-			}
+		//prints out Opponents
+		for(Object i:Opponents) {
+			System.out.println(i.toString());
 		}
 			
 		}
@@ -193,9 +177,8 @@ public class GameWorld {
 	//code t increments the clock
 	public void clock() {
 		// moves Opponents
-		for (int i=0;i<numastronauts+numaliens;i++) {
-			Opponents temp = (Opponents) Opponents.get(i);
-			temp.Moveit();
+		for (Object i:Opponents) {
+			((Opponents)i).Moveit();
 		}
 		System.out.println("The clock has ticked: all moving objects have moved use m to see new state");
 	}

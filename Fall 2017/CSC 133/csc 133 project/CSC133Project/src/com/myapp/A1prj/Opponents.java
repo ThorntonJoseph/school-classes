@@ -16,14 +16,13 @@ public abstract class Opponents extends GameObject {
 	public void setsize(int size) {
 		
 	}
-	// definition for how object movew
+	// definition for how object move
 	public void Moveit() {
 		double deltax,deltay;
-		double theta;
-		theta=rn.nextDouble();
-		deltax=Math.cos(theta);
-		deltay=Math.sin(theta);
-		Location newlocation=Location.add(super.getlocation(),new Location(deltax,deltay));
+		double theta=((double) getdirection()/180)*Math.PI;
+		deltax=Math.round(getspeed()*Math.cos(theta)*10.0)/10.0;
+		deltay=Math.round(getspeed()*Math.sin(theta)*10.0)/10.0;
+		Location newlocation=new Location(super.getlocation().getx()+deltax,super.getlocation().gety()+deltay);
 		this.setlocation(newlocation);
 		setdirection(rn.nextInt(359));
 	}
