@@ -1,4 +1,4 @@
-package com.myapp.A1prj;
+package com.mycompany.myapp;
 
 
 public class Location {

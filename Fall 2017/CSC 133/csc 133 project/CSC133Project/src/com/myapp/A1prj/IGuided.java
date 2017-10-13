@@ -1,7 +1,7 @@
-package com.myapp.A1prj;
+package com.mycompany.myapp;
 
 
-public interface Guided {
+public interface IGuided {
 	public void moveleft();
 	 public void moveright();
 	 public void moveup();

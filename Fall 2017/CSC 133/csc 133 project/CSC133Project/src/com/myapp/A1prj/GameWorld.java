@@ -1,24 +1,32 @@
-package com.myapp.A1prj;
-import java.util.Iterator;
-import java.util.Random;
-import java.util.ArrayList;
-public class GameWorld {
+package com.mycompany.myapp;
+import java.util.*;
+// @formatter:on 
+public class GameWorld extends Observable  {
 	// set variables
+	private MapView mv;
+	private ScoreView sv;
+	private static final boolean on = true;
+	private static final boolean off = false;
 	private int score;
 	private int numastronauts=4;
 	private int numaliens=3;
 	private int numAstronautsaved=0;
 	private int numAliensin=0;
-	private ArrayList<Opponents> Opponents = new ArrayList<Opponents>();
+	private ArrayList<GameObject> Opponents = new ArrayList<GameObject>();
 	private SpaceShip player;
+	private boolean sound = off;
+
 	
-	
+	public GameWorld() {
+		mv = new MapView(this);
+		sv = new ScoreView (this);
+	}	
 	// creates the game world
 	public void init() {
 		
 		 
 		 // create the players space ship
-		 player = new SpaceShip();
+		 player = SpaceShip.getspaceship();
 		 // instantiates all astronauts
 		 for(int i=0;i<numastronauts;i++) {
 			 Opponents.add(new Astronaut());
@@ -30,7 +38,7 @@ public class GameWorld {
 		 }
 		 
 		 // creates the player ship
-		SpaceShip player = new SpaceShip();
+		SpaceShip player = SpaceShip.getspaceship();
 	}
 	// code e expands door size
 	public void expand() {
@@ -103,9 +111,9 @@ public class GameWorld {
 	// code s open door and update score according to previous input
 	public void openenter() {
 		// checks for contained opponents
-		Iterator<Opponents> itr= Opponents.iterator();
+		Iterator<GameObject> itr= Opponents.iterator();
 		while (itr.hasNext()) {
-			Opponents temp=itr.next();
+			GameObject temp=itr.next();
 			if(player.contains(temp.getlocation().getx(),temp.getlocation().gety())) {
 				if(temp instanceof Astronaut) {
 					score+= ((Astronaut)temp).gethealth()*10;

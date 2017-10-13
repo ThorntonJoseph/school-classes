@@ -1,7 +1,8 @@
-package com.myapp.A1prj;
+package com.mycompany.myapp;
 
-import com.codename1.ui.Form;
+import com.codename1.ui.*;
 import com.codename1.ui.events.ActionListener;
+import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.Label;
 import com.codename1.ui.TextField;
 import com.codename1.ui.events.ActionEvent; 
@@ -10,10 +11,17 @@ import java.lang.String;
 public class Game extends Form {
 	private boolean exit=false;
 	private GameWorld gw;
+	private MapView mv;
+	private ScoreView sv;
 	public Game() {
 		gw = new GameWorld();
+		sv = new ScoreView(gw);
+		mv = new MapView(gw);
 		gw.init();
-		play(); 
+		setLayout(new BorderLayout());
+		
+		add(BorderLayout.EAST,new Button("click me"));
+		this.show(); 
 		
 	}
 	private void play(){

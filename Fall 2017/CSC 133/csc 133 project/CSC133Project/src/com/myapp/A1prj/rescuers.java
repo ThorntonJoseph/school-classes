@@ -1,8 +1,8 @@
-package com.myapp.A1prj;
+package com.mycompany.myapp;
 
 	import java.io.*;
 	import com.codename1.util.MathUtil;
-public abstract class rescuers extends GameObject implements Guided {
+public abstract class rescuers extends GameObject implements IGuided {
 	final float moveconstant=10;
 	private Location currentLocation;
 	private double deltax,deltay;

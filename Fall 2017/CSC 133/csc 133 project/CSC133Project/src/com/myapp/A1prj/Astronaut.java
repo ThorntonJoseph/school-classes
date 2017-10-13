@@ -1,11 +1,11 @@
-package com.myapp.A1prj;
+package com.mycompany.myapp;
 
 
 import java.util.Random;
 
 import com.codename1.charts.util.ColorUtil;
 
-public class Astronaut extends Opponents implements Move{
+public class Astronaut extends Opponents implements IMoving{
 	//set variables
 	private int Health;
 	private int fade=50;

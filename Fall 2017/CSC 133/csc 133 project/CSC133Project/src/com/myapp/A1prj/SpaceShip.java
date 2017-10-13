@@ -1,4 +1,4 @@
-package com.myapp.A1prj;
+package com.mycompany.myapp;
 
 import java.util.Random;
 import com.codename1.charts.util.ColorUtil;
@@ -7,13 +7,21 @@ public class SpaceShip extends rescuers{
 	//door state variables
 	public static final boolean Closed = false;
 	public static final boolean Open = true;
+	private static SpaceShip SS;
 	boolean doorstate;
-	public SpaceShip() {
+	// implements sigleton design pattern.
+	private SpaceShip() {
 		//set color
 		super.setsize(100);
 		super.setcolor(ColorUtil.GREEN);
 		//set door state
 		doorstate=Closed;
+	}
+	public static SpaceShip getspaceship() {
+		if(SS==null) {
+			SS=new SpaceShip();
+		}
+		return SS;
 	}
 	
 	// this objects size can change according to game

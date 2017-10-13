@@ -1,11 +1,11 @@
-package com.myapp.A1prj;
+package com.mycompany.myapp;
 
 
 import java.util.Random;
 
 import com.codename1.charts.util.ColorUtil;
 
-public class Alien extends Opponents implements Move{
+public class Alien extends Opponents implements IMoving{
 	private Random rn = new Random();
 	public Alien() {
 		//set color
