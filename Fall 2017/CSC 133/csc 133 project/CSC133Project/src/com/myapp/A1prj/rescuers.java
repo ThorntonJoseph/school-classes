@@ -1,4 +1,4 @@
-package com.mycompany.myapp;
+package com.myapp.A1prj;
 
 	import java.io.*;
 	import com.codename1.util.MathUtil;
@@ -7,6 +7,9 @@ public abstract class rescuers extends GameObject implements IGuided {
 	private Location currentLocation;
 	private double deltax,deltay;
 	
+	public rescuers(int width,int height) {
+		super(width,height);
+	}
 	
 	// moves object left
 	public void moveleft() {

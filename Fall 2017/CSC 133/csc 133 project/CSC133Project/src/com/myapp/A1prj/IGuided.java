@@ -1,4 +1,4 @@
-package com.mycompany.myapp;
+package com.myapp.A1prj;
 
 
 public interface IGuided {

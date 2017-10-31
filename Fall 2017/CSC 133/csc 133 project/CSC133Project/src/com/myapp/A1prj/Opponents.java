@@ -1,4 +1,4 @@
-package com.mycompany.myapp;
+package com.myapp.A1prj;
 
 import java.util.Random;
 public abstract class Opponents extends GameObject {

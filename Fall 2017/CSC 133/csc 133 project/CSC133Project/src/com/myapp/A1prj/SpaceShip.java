@@ -1,4 +1,4 @@
-package com.mycompany.myapp;
+package com.myapp.A1prj;
 
 import java.util.Random;
 import com.codename1.charts.util.ColorUtil;
@@ -10,8 +10,8 @@ public class SpaceShip extends rescuers{
 	private static SpaceShip SS;
 	boolean doorstate;
 	// implements sigleton design pattern.
-	private SpaceShip() {
-		//set color
+	private SpaceShip(int width,int height) {
+		super(width,height);
 		super.setsize(100);
 		super.setcolor(ColorUtil.GREEN);
 		//set door state
@@ -19,14 +19,21 @@ public class SpaceShip extends rescuers{
 	}
 	public static SpaceShip getspaceship() {
 		if(SS==null) {
-			SS=new SpaceShip();
+			SS=new SpaceShip(1024,768);
+		}
+		return SS;
+	}
+	public static SpaceShip getspaceship(int width,int height)
+	{
+		if(SS==null) {
+			SS= new SpaceShip(width,height);
 		}
 		return SS;
 	}
 	
 	// this objects size can change according to game
 	public void setsize(int size) {
-		if(size>1024) {
+		if(size>super.getheight()) {
 			//do nothing
 		}
 		else if(size<50) {
@@ -68,8 +75,8 @@ public class SpaceShip extends rescuers{
 		
 	}
 	public boolean contains(double x,double y) {
-		if(x>super.getlocation().getx()-(super.getsize()/2)&& x<super.getlocation().getx()+(super.getsize()/2)
-				&& y>super.getlocation().gety()-(super.getsize()/2) && y<super.getlocation().getx()+(super.getsize()/2)) {
+		if(x>=(super.getlocation().getx()-(super.getsize()/2))&& x<=(super.getlocation().getx()+(super.getsize()/2))
+				&& y>=(super.getlocation().gety()-(super.getsize()/2)) && y<=(super.getlocation().gety()+(super.getsize()/2))) {
 			return true;
 		}else
 			return false;
